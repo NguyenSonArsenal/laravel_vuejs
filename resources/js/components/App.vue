@@ -1,19 +1,40 @@
+<style></style>
+
 <template>
-    <div class="container">
-        <transition name="fade">
-            <router-view></router-view>
-        </transition>
+    <div id="wrapper">
+        <Navbar />
+
+        <div id="page-wrapper" class="gray-bg">
+            <HeaderTop />
+            <router-view></router-view> <!-- Content -->
+            <Footer />
+        </div>
+
+        <!--<Modal />--> <!-- @todo -->
     </div>
 </template>
-<style>
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s
-    }
 
-    .fade-enter, .fade-leave-active {
-        opacity: 0
-    }
-</style>
 <script>
-    export default {}
+    import Navbar from './layouts/Navbar.vue';
+    import HeaderTop from './layouts/HeaderTop.vue';
+    import Footer from './layouts/Footer.vue';
+
+
+    export default {
+        name: 'app',
+        components: {
+            'HeaderTop': HeaderTop,
+            'Footer': Footer,
+            'Navbar': Navbar,
+        },
+        methods : {
+
+        },
+        computed : {
+
+        },
+        ready : function(){
+
+        }
+    }
 </script>
