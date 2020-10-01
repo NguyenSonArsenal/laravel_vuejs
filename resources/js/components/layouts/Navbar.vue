@@ -8,7 +8,7 @@
                     <li class="nav-header">
                         <div class="dropdown profile-element">
                             <img alt="image" class="rounded-circle"
-                                 src="backend/images/theme/profile_small.jpg"/> <!-- Hỏi cách load image -->
+                                 src="/backend/images/theme/profile_small.jpg"/> <!-- Hỏi cách load image -->
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="block m-t-xs font-bold"></span>
                                 <span class="text-muted text-xs block">Quản lý <b class="caret"></b></span>
@@ -30,34 +30,10 @@
                         </a>
                     </li>
                     <li class="active">
-                        <a href="">
+                        <router-link :to="{name:'Student'}">
                             <i class="fa fa-th-large"></i>
-                            <span class="nav-label">Admin</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-desktop"></i>
-                            <span class="nav-label">Sản phẩm</span> <span class="float-right label label-primary">Đặc biệt</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-desktop"></i>
-                            <span class="nav-label">Danh mục sản phẩm</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-desktop"></i>
-                            <span class="nav-label">Đơn hàng</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-desktop"></i>
-                            <span class="nav-label">Danh sách User</span>
-                        </a>
+                            <span class="nav-label">Học sinh</span>
+                        </router-link>
                     </li>
                 </ul>
             </div>

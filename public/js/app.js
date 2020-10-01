@@ -2164,30 +2164,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'comp-navbar'
 });
@@ -2203,7 +2179,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2366,21 +2341,106 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'student-add',
   data: function data() {
     return {
-      student: {},
-      alert: ''
+      errors: [],
+      student: {
+        full_name: '',
+        address: '',
+        phone_number: ''
+      }
     };
   },
   methods: {
+    checkFormAddStudent: function checkFormAddStudent(e) {
+      return true;
+
+      if (this.student.full_name) {
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.student.full_name || !this.student.phone_number) {
+        this.errors.push('Tên đầy đủ là bắt buộc nhập');
+        this.errors.push('SĐT là bắt buộc nhập');
+      }
+
+      e.preventDefault();
+    },
     addCategory: function addCategory() {
       var _this = this;
 
-      this.axios.post('/api/students', this.student).then(function (res) {
-        _this.$router.push({
-          name: 'Student'
-        });
+      this.axios.post('/api/students', this.student).then(function (response) {
+        if (response.data.ok) {
+          console.log('Redirect ...');
+          return _this.$router.push({
+            name: 'Student'
+          });
+          return showSuccessFlash(response.message);
+        } // this.$router.push({name: 'Student'})
+
       })["catch"](function (error) {
         _this.alert = error;
       });
@@ -3022,7 +3082,7 @@ var staticRenderFns = [
                   { staticClass: "m-r-sm text-muted welcome-message" },
                   [
                     _vm._v(
-                      "Chào mừng bạn tới trang quản trị website dev.banhang.jp"
+                      "Chào mừng bạn tới trang quản trị website laravel_vuejs_crud"
                     )
                   ]
                 )
@@ -3303,164 +3363,112 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c(
+      "nav",
+      {
+        staticClass: "navbar-default navbar-static-side",
+        attrs: { role: "navigation" }
+      },
+      [
+        _c("div", { staticClass: "sidebar-collapse" }, [
+          _c(
+            "ul",
+            { staticClass: "nav metismenu", attrs: { id: "side-menu" } },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "active" },
+                [
+                  _c("router-link", { attrs: { to: { name: "Student" } } }, [
+                    _c("i", { staticClass: "fa fa-th-large" }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "nav-label" }, [
+                      _vm._v("Học sinh")
+                    ])
+                  ])
+                ],
+                1
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "nav",
-        {
-          staticClass: "navbar-default navbar-static-side",
-          attrs: { role: "navigation" }
-        },
-        [
-          _c("div", { staticClass: "sidebar-collapse" }, [
+    return _c("li", { staticClass: "nav-header" }, [
+      _c("div", { staticClass: "dropdown profile-element" }, [
+        _c("img", {
+          staticClass: "rounded-circle",
+          attrs: {
+            alt: "image",
+            src: "/backend/images/theme/profile_small.jpg"
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "dropdown-toggle",
+            attrs: { "data-toggle": "dropdown", href: "#" }
+          },
+          [
+            _c("span", { staticClass: "block m-t-xs font-bold" }),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-muted text-xs block" }, [
+              _vm._v("Quản lý "),
+              _c("b", { staticClass: "caret" })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("ul", { staticClass: "dropdown-menu animated fadeInRight m-t-xs" }, [
+          _c("li", [
             _c(
-              "ul",
-              { staticClass: "nav metismenu", attrs: { id: "side-menu" } },
-              [
-                _c("li", { staticClass: "nav-header" }, [
-                  _c("div", { staticClass: "dropdown profile-element" }, [
-                    _c("img", {
-                      staticClass: "rounded-circle",
-                      attrs: {
-                        alt: "image",
-                        src: "backend/images/theme/profile_small.jpg"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-toggle",
-                        attrs: { "data-toggle": "dropdown", href: "#" }
-                      },
-                      [
-                        _c("span", { staticClass: "block m-t-xs font-bold" }),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          { staticClass: "text-muted text-xs block" },
-                          [
-                            _vm._v("Quản lý "),
-                            _c("b", { staticClass: "caret" })
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "ul",
-                      {
-                        staticClass: "dropdown-menu animated fadeInRight m-t-xs"
-                      },
-                      [
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "dropdown-item",
-                              attrs: { href: "javascript:void(0)" }
-                            },
-                            [_vm._v("Thông tin cá nhân")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "dropdown-divider" }),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "dropdown-item",
-                              attrs: { href: "" }
-                            },
-                            [_vm._v("Đăng xuất")]
-                          )
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "logo-element" }, [
-                    _vm._v(
-                      "\n                        IN+\n                    "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "active" }, [
-                  _c("a", { attrs: { href: "javascript:void(0);" } }, [
-                    _c("i", { staticClass: "fa fa-th-large" }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "nav-label" }, [
-                      _vm._v("Trang chủ")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "active" }, [
-                  _c("a", { attrs: { href: "" } }, [
-                    _c("i", { staticClass: "fa fa-th-large" }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "nav-label" }, [_vm._v("Admin")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "" } }, [
-                    _c("i", { staticClass: "fa fa-desktop" }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "nav-label" }, [
-                      _vm._v("Sản phẩm")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      { staticClass: "float-right label label-primary" },
-                      [_vm._v("Đặc biệt")]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "" } }, [
-                    _c("i", { staticClass: "fa fa-desktop" }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "nav-label" }, [
-                      _vm._v("Danh mục sản phẩm")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "" } }, [
-                    _c("i", { staticClass: "fa fa-desktop" }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "nav-label" }, [
-                      _vm._v("Đơn hàng")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("a", { attrs: { href: "" } }, [
-                    _c("i", { staticClass: "fa fa-desktop" }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "nav-label" }, [
-                      _vm._v("Danh sách User")
-                    ])
-                  ])
-                ])
-              ]
+              "a",
+              {
+                staticClass: "dropdown-item",
+                attrs: { href: "javascript:void(0)" }
+              },
+              [_vm._v("Thông tin cá nhân")]
             )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "dropdown-divider" }),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
+              _vm._v("Đăng xuất")
+            ])
           ])
-        ]
-      )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "logo-element" }, [
+        _vm._v("\n                        IN+\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "active" }, [
+      _c("a", { attrs: { href: "javascript:void(0);" } }, [
+        _c("i", { staticClass: "fa fa-th-large" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "nav-label" }, [_vm._v("Trang chủ")])
+      ])
     ])
   }
 ]
@@ -3501,7 +3509,22 @@ var render = function() {
           _vm._m(0)
         ]),
         _vm._v(" "),
-        _vm._m(1)
+        _c("div", { staticClass: "col-lg-2" }, [
+          _c(
+            "h2",
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-sm btn-primary float-right m-t-n-xs",
+                  attrs: { to: { name: "StudentAdd" }, type: "submit" }
+                },
+                [_c("strong", [_vm._v("Thêm mới")])]
+              )
+            ],
+            1
+          )
+        ])
       ]
     ),
     _vm._v(" "),
@@ -3533,7 +3556,7 @@ var render = function() {
                                   attrs: { id: "" }
                                 },
                                 [
-                                  _vm._m(2),
+                                  _vm._m(1),
                                   _vm._v(" "),
                                   _c(
                                     "tbody",
@@ -3564,7 +3587,7 @@ var render = function() {
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _vm._m(3, true),
+                                          _vm._m(2, true),
                                           _vm._v(" "),
                                           _c(
                                             "a",
@@ -3625,24 +3648,7 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("li", { staticClass: "breadcrumb-item active" }, [
-        _c("strong", [_vm._v("Danh mục danh sách học sinh")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-2" }, [
-      _c("h2", [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-sm btn-primary float-right m-t-n-xs",
-            attrs: { href: "", type: "submit" }
-          },
-          [_c("strong", [_vm._v("Thêm mới")])]
-        )
+        _c("strong", [_vm._v("Danh sách học sinh")])
       ])
     ])
   },
@@ -3698,135 +3704,270 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    { staticClass: "container col-md-6" },
-    [
-      _c(
-        "router-link",
-        {
-          staticClass: "btn btn-outline-success",
-          staticStyle: { margin: "5px" },
-          attrs: { to: { name: "Student" } }
-        },
-        [_vm._v("Back")]
-      ),
-      _vm._v(" "),
-      _c("h1", [_vm._v("Add Student")]),
-      _vm._v(" "),
-      _vm.alert !== ""
-        ? _c("section", { staticClass: "alert alert-danger" }, [
-            _vm._v(_vm._s(_vm.alert))
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "row wrapper border-bottom white-bg page-heading" },
+      [
+        _c("div", { staticClass: "col-lg-10" }, [
+          _c("h2", [_vm._v("Học sinh: Thêm mới")]),
+          _vm._v(" "),
+          _c("ol", { staticClass: "breadcrumb" }, [
+            _c(
+              "li",
+              { staticClass: "breadcrumb-item" },
+              [
+                _c("router-link", { attrs: { to: { name: "app" } } }, [
+                  _vm._v("Home")
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              { staticClass: "breadcrumb-item active" },
+              [
+                _c("router-link", { attrs: { to: { name: "Student" } } }, [
+                  _c("strong", [_vm._v(" Học sinh ")])
+                ])
+              ],
+              1
+            )
           ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          attrs: { method: "post" },
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.addCategory($event)
-            }
-          }
-        },
-        [
-          _c("section", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Tên đầy đủ")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-2" }, [
+          _c(
+            "h2",
+            [
+              _c(
+                "router-link",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.student.full_name,
-                  expression: "student.full_name"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", autofocus: "", required: "" },
-              domProps: { value: _vm.student.full_name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.student, "full_name", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Địa chỉ")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.student.address,
-                  expression: "student.address"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", autofocus: "", required: "" },
-              domProps: { value: _vm.student.address },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.student, "address", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("SĐT")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.student.phone_number,
-                  expression: "student.phone_number"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", autofocus: "", required: "" },
-              domProps: { value: _vm.student.phone_number },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.student, "phone_number", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _vm._m(0)
-        ]
-      )
-    ],
-    1
-  )
+                  staticClass: "btn btn-sm btn-primary float-right m-t-n-xs",
+                  attrs: { to: { name: "Student" }, type: "submit" }
+                },
+                [_c("strong", [_vm._v("Quay lại")])]
+              )
+            ],
+            1
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "wrapper wrapper-content animated fadeInRight ecommerce" },
+      [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "tabs-container" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "tab-content" }, [
+                _c(
+                  "div",
+                  { staticClass: "tab-pane active", attrs: { id: "tab-1" } },
+                  [
+                    _c("div", { staticClass: "panel-body" }, [
+                      _c("form", { attrs: { action: "", method: "POST" } }, [
+                        _vm.errors.length > 0
+                          ? _c(
+                              "div",
+                              { staticClass: "error alert alert-danger" },
+                              [
+                                _c(
+                                  "ul",
+                                  { staticClass: "mb-0" },
+                                  _vm._l(_vm.errors, function(error) {
+                                    return _c("li", [_vm._v(_vm._s(error))])
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-8" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.student.full_name,
+                                  expression: "student.full_name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", autofocus: "" },
+                              domProps: { value: _vm.student.full_name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.student,
+                                    "full_name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-sm-2 col-form-label" },
+                            [_vm._v("Địa chỉ: ")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-8" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.student.address,
+                                  expression: "student.address"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.student.address },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.student,
+                                    "address",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-8" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.student.phone_number,
+                                  expression: "student.phone_number"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "number" },
+                              domProps: { value: _vm.student.phone_number },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.student,
+                                    "phone_number",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-sm-8 offset-sm-2" },
+                            [
+                              _c(
+                                "router-link",
+                                { attrs: { to: { name: "Student" } } },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-primary btn-sm",
+                                      attrs: { type: "button" }
+                                    },
+                                    [_vm._v("Hủy")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "btn btn-primary btn-sm",
+                                attrs: { type: "button", value: "Thêm mới" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addCategory()
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "form-group" }, [
-      _c("input", {
-        staticClass: "btn btn-outline-success",
-        attrs: { type: "submit", value: "Add" }
-      })
+    return _c("ul", { staticClass: "nav nav-tabs" }, [
+      _c("li", [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link active",
+            attrs: { "data-toggle": "tab", href: "#tab-1" }
+          },
+          [_vm._v(" Thông tin học sinh")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "col-sm-2 col-form-label" }, [
+      _vm._v("Tên đầy đủ: "),
+      _c("span", { staticClass: "input_label_required" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "col-sm-2 col-form-label" }, [
+      _vm._v("SĐT: "),
+      _c("span", { staticClass: "input_label_required" }, [_vm._v("*")])
     ])
   }
 ]
@@ -19085,11 +19226,13 @@ var routes = [{
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
-  routes: routes
-});
+  routes: routes // short for `routes: routes`
+
+}); // Tạo và mount đối tượng root.
+
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a(vue__WEBPACK_IMPORTED_MODULE_0___default.a.util.extend({
   router: router
-}, _components_App_vue__WEBPACK_IMPORTED_MODULE_4__["default"])).$mount('#app');
+}, _components_App_vue__WEBPACK_IMPORTED_MODULE_4__["default"])).$mount('#app'); // Tạo xong app!
 
 /***/ }),
 

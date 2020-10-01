@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Student;
 
-class StudentController extends Controller
+class StudentController extends ApiBaseController
 {
     public function index()
     {
-        $students = Student::where('del_flag', getConfig('del_flag.on'))->get();
+        $students = Student::where('del_flag', getConfig('del_flag.on'))->orWhereNull('del_flag')->orderBy('id', 'desc')->get();
         return $students;
     }
 
@@ -32,7 +31,6 @@ class StudentController extends Controller
 
     public function store()
     {
-        dd('Zo store student');
         $entity = new Student();
         $params = [
             'full_name' => request('full_name'),
@@ -42,6 +40,6 @@ class StudentController extends Controller
         $entity->fill($params);
         $entity->save();
 
-        return response()->json('Added successfully');
+        return $this->renderJson();
     }
 }

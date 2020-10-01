@@ -8,16 +8,15 @@
                         <a href="">Trang chủ</a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <strong>Danh mục danh sách học sinh</strong>
+                        <strong>Danh sách học sinh</strong>
                     </li>
                 </ol>
             </div>
             <div class="col-lg-2">
                 <h2>
-                    <a href=""
-                       class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
+                    <router-link :to="{name:'StudentAdd'}" class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
                         <strong>Thêm mới</strong>
-                    </a>
+                    </router-link>
                 </h2>
             </div>
         </div>

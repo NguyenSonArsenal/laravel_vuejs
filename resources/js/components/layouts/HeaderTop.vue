@@ -17,7 +17,7 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li style="padding: 20px">
-                        <span class="m-r-sm text-muted welcome-message">Chào mừng bạn tới trang quản trị website dev.banhang.jp</span>
+                        <span class="m-r-sm text-muted welcome-message">Chào mừng bạn tới trang quản trị website laravel_vuejs_crud</span>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">

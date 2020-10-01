@@ -16,3 +16,29 @@ if (!function_exists('getConstant')) {
         return config('constant.' . $key, $default);
     }
 }
+
+
+if (!function_exists('toSql')) {
+
+    function toSql($query)
+    {
+        return sql_binding($query->toSql(), $query->getBindings());
+    }
+}
+
+if (!function_exists('sql_binding')) {
+
+    function sql_binding($sql, $bindings)
+    {
+        $boundSql = str_replace(['%', '?'], ['%%', '%s'], $sql);
+        foreach ($bindings as &$binding) {
+            if ($binding instanceof \DateTime) {
+                $binding = $binding->format('\'Y-m-d H:i:s\'');
+            } elseif (is_string($binding)) {
+                $binding = "'$binding'";
+            }
+        }
+        $boundSql = vsprintf($boundSql, $bindings);
+        return $boundSql;
+    }
+}
