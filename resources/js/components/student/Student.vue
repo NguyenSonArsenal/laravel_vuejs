@@ -32,23 +32,30 @@
                                         <div class="ibox ">
                                             <div class="ibox-content">
                                                 <div class="table-responsive">
+
+                                                    <!-- Notification -->
+                                                    <Notification :notification="notification"></Notification>
+                                                    <!-- End notification -->
+
+
                                                     <table class="table table-striped table-bordered table-hover dataTables-example" id="">
                                                         <thead>
                                                             <tr>
                                                                 <th>ID</th>
                                                                 <th>Name</th>
                                                                 <th>Phone</th>
-                                                                <td>Gender</td>
+                                                                <th>Gender</th>
                                                                 <th>Address</th>
                                                                 <th>Actions</th>
                                                             </tr>
                                                         </thead>
 
                                                         <tbody>
-                                                            <tr v-for="student in students">
+                                                            <tr v-for="(student, index) in students">
                                                                 <td>{{ student.id }}</td>
                                                                 <td>{{ student.full_name }}</td>
                                                                 <td>{{ student.phone_number }}</td>
+                                                                <!--<td>{{ student.gender | showGender }}</td>-->
                                                                 <td>{{ student.gender == 'M' ? 'Boy' : 'Girl' }}</td>
                                                                 <td>{{ student.address }}</td>
                                                                 <td>
@@ -57,7 +64,7 @@
                                                                         <i class="fa fa-edit">Sửa</i>
                                                                     </a>
 
-                                                                    <a href="#model_confirm_delete" @click="deleteStudent(student.id)"
+                                                                    <a href="#model_confirm_delete" @click="deleteStudent(student.id, index)"
                                                                        class="btn-danger btn btn-xs model_confirm_delete rounded"
                                                                        data-toggle="modal"
                                                                        data-form-action="">
@@ -84,17 +91,22 @@
 </template>
 
 <script>
+    import Notification from "../includes/Nofication";
     export default {
         name:'StudentList',
+        components: {Notification},
         data() {
             return {
                 students: [],
-                alert: ''
+                alert: '',
+                notification: ''
             }
         },
+
         created: function () {
             this.showStudent();
         },
+
         methods: {
             showStudent() {
                 this.axios.get('api/students')
@@ -110,15 +122,29 @@
             deleteStudent(id) {
                 if (confirm('Are you sure?')) {
                     this.axios.delete('api/students/' + id)
-                        .then((res) => {
-                            this.students = res.data.students;
-                            this.alert = res.data.notification
+                        .then((response) => {
+                            if (response.data.ok) {
+                                this.showStudent();
+                                this.notification = 'Success';
+                                return this.$router.push({name: 'Student'});
+                            }
                         })
                         .catch((error) => {
+                            console.log('Error: something in wrong');
                             this.alert = error
                         });
                 }
             }
-        }
+        },
+
+        // Hỏi lại tại sao không ăn code
+        filter: {
+            showGender: function (gender) {
+                if (!gender) {
+                    return '';
+                }
+                return gender.toUpperCase() == 'M' ? 'Boy' : 'Girl';
+            },
+        },
     }
 </script>

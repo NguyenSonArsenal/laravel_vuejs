@@ -32,10 +32,8 @@ const routes = [
 
 const router = new VueRouter({
     mode: 'history',
-    routes: routes // short for `routes: routes`
+    routes: routes
 });
 
-// Tạo và mount đối tượng root.
+// Create and mount to root
 new Vue(Vue.util.extend({router}, App)).$mount('#app');
-
-// Tạo xong app!

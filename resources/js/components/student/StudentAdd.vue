@@ -122,9 +122,8 @@
                 this.axios.post('/api/students', this.student)
                     .then((response) => {
                         if (response.data.ok) {
-                            console.log('Redirect ...');
                             return this.$router.push({name: 'Student'});
-                            return showSuccessFlash(response.message);
+                            // return showSuccessFlash(response.message);
                         }
 
                         // this.$router.push({name: 'Student'})

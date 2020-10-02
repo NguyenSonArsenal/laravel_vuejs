@@ -15,6 +15,7 @@
 </template>
 
 <script>
+    import Notification from './includes/Nofication.vue';
     import Navbar from './layouts/Navbar.vue';
     import HeaderTop from './layouts/HeaderTop.vue';
     import Footer from './layouts/Footer.vue';
@@ -26,6 +27,7 @@
             'HeaderTop': HeaderTop,
             'Footer': Footer,
             'Navbar': Navbar,
+            'Notification': Notification,
         },
         methods : {
 
