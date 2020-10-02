@@ -50,27 +50,21 @@ class BaseController extends Controller
         return $this->_ok = $ok;
     }
 
-    public function renderJson($message = [], $data = [])
+    public function renderJson()
     {
         $response = [
             'ok' => true,
             'code' => $this->ajaxGetCode(),
-            'message' => is_null($message) ? ['Thành công'] : $message,
-            'data' => $data
+            'message' => $this->ajaxGetMessage(),
+            'data' => $this->ajaxGetData()
         ];
 
         return response()->json($response);
     }
 
-    public function renderErrorJson($message = [], $data = [], $code = 500)
+    public function renderErrorJson($code = 500)
     {
-        $response = [
-            'ok' => false,
-            'code' => $code,
-            'message' => is_null($message) ? ['Lỗi hệ thống'] : $message,
-            'data' => $data
-        ];
-
-        return response()->json($response);
+        $this->ajaxSetCode($code);
+        return $this->renderJson();
     }
 }

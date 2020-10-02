@@ -125,7 +125,7 @@
                         .then((response) => {
                             if (response.data.ok) {
                                 this.showStudent();
-                                this.notification = 'Success';
+                                this.notification = response.data.message;
                                 return this.$router.push({name: 'Student'});
                             }
                         })

@@ -42,3 +42,10 @@ if (!function_exists('sql_binding')) {
         return $boundSql;
     }
 }
+
+if (!function_exists('transMessage')) {
+    function transMessage($key, $default = '')
+    {
+        return empty(trans('messages.' . $key)) ? $default : trans('messages.' . $key);
+    }
+}

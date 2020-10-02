@@ -18,13 +18,12 @@ class StudentController extends ApiBaseController
             $student = Student::findOrFail($id);
             if ($student) {
                 $student->del_flag = getConfig('del_flag.off');
-                // $student->save();
+                $student->save();
             }
-            $viewData['notification'] = "Deleted successfully";
-
+            $this->ajaxSetMessage(transMessage('delete_success'));
             return $this->renderJson();
         } catch (\Exception $e) {
-            $viewData['notification'] = "System Error";
+            $this->ajaxSetMessage(transMessage('system_error'));
         }
 
         return $this->renderErrorJson();

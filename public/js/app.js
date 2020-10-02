@@ -1970,13 +1970,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   // name: 'notification',
   props: ['notification'],
-  created: function created() {
-    console.log('notification message from parent component');
-    console.log(this.notification); //prints out an empty string
+  created: function created() {// console.log('notification message from parent component');
+    // console.log(this.notification) //prints out an empty string
   }
 });
 
@@ -2345,7 +2343,7 @@ __webpack_require__.r(__webpack_exports__);
           if (response.data.ok) {
             _this2.showStudent();
 
-            _this2.notification = 'Success';
+            _this2.notification = response.data.message;
             return _this2.$router.push({
               name: 'Student'
             });
@@ -3057,8 +3055,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("strong", [_vm._v("HIEN THI NOTIFICATION IN HERE")]),
-    _vm._v(" "),
     _vm.notification
       ? _c(
           "div",
@@ -19867,8 +19863,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\projects\EnglishNow\laravel_vuejs\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\projects\EnglishNow\laravel_vuejs\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! D:\projects\EnglishNow\crm\laravel_vuejs\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\projects\EnglishNow\crm\laravel_vuejs\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })
