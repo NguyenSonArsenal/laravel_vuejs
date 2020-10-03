@@ -11,6 +11,7 @@
     <link href="{{ asset('css/theme/vendors/footable/footable.core.css') }}" rel="stylesheet">
     <link href="{{ asset('css/theme/fonts/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('css/theme/vendors/dataTables/datatables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/theme/vendors/datapicker/datepicker3.css') }}" rel="stylesheet">
 
     @stack('plugin_css')
 
@@ -42,6 +43,7 @@
 <script src="{{ asset('js/theme/vendors/loadingoverlay.min.js') }}"></script>
 <script src="{{ asset('js/theme/vendors/dataTables/datatables.min.js') }}"></script>
 <script src="{{ asset('js/theme/vendors/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/theme/vendors/datapicker/bootstrap-datepicker.js') }}"></script>
 
 @stack('plugin_js')
 

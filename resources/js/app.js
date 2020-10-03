@@ -9,10 +9,16 @@ import axios from 'axios';
 Vue.use(VueAxios, axios);
 
 import App from './components/App.vue';
+import Dashboard from './components/Dashboard.vue';
 import Student from './components/student/Student.vue';
 import StudentAdd from './components/student/StudentAdd.vue';
 
 const routes = [
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: Dashboard
+    },
     {
         path: '/students',
         name: 'Student',

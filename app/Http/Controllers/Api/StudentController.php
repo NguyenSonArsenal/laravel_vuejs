@@ -31,15 +31,25 @@ class StudentController extends ApiBaseController
 
     public function store()
     {
-        $entity = new Student();
-        $params = [
-            'full_name' => request('full_name'),
-            'address' => request('address'),
-            'phone_number' => request('phone_number')
-        ];
-        $entity->fill($params);
-        $entity->save();
+        try {
+            $entity = new Student();
+            $params = [
+                'full_name' => request('full_name'),
+                'address' => request('address'),
+                'phone_number' => request('phone_number'),
+                'gender' => request('gender'),
+                'date_of_birth' => request('date_of_birth'),
+            ];
+            $entity->fill($params);
+            $entity->save();
 
-        return $this->renderJson();
+            $this->ajaxSetMessage(transMessage('add_success'));
+            return $this->renderJson();
+        } catch (\Exception $e) {
+            $this->ajaxSetMessage(transMessage('system_error'));
+        }
+
+
+        return $this->renderErrorJson();
     }
 }

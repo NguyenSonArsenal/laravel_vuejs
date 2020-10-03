@@ -2,8 +2,8 @@
 
 <template>
     <div>
-        <div v-if="notification" class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ notification }}</strong>
+        <div v-if="propNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ propNotification }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -15,7 +15,7 @@
 <script>
     export default {
         // name: 'notification',
-        props: ['notification'],
+        props: ['propNotification'],
         created: function () {
             // console.log('notification message from parent component');
             // console.log(this.notification) //prints out an empty string

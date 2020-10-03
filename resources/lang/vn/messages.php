@@ -3,6 +3,8 @@
 return [
     'login_error' => 'Email or mật khẩu không chính xác.',
     'success' => 'Thành công.',
+    'add_success' => 'Thêm thành công.',
+    'add_fault' => 'Thêm thất bại.',
     'delete_success' => 'Xóa thành công.',
     'delete_fault' => 'Xóa thất bại.',
     'create_success' => 'Tạo mới thành công.',

@@ -22,12 +22,11 @@
 
 
     export default {
-        name: 'app',
+        // name: 'app',
         components: {
             'HeaderTop': HeaderTop,
             'Footer': Footer,
-            'Navbar': Navbar,
-            'Notification': Notification,
+            'Navbar': Navbar
         },
         methods : {
 
