@@ -6,7 +6,7 @@
         <h2>Học sinh: Thêm mới</h2>
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <router-link :to="{name:'Dashboard'}">Home</router-link> <!-- Hỏi ở đây-->
+            <router-link :to="{name:'Dashboard'}">Home</router-link>
           </li>
           <li class="breadcrumb-item active">
             <router-link :to="{name:'Student'}"><strong> Học sinh </strong></router-link>
@@ -156,7 +156,7 @@
       addStudent() {
         this.axios.post('/api/students', this.student)
           .then((response) => {
-            if (response.data.ok) {
+            if (response.status === 200) {
               this.notification = response.data.message;
               return this.$router.push({name: 'Student'});
             }

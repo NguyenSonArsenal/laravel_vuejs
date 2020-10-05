@@ -30,8 +30,7 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="ibox ">
-                      <div class="ibox-content">
-                        <div class="table-responsive">
+                      <div class="table-responsive">
 
                           <!-- Notification -->
                           <Notification :propNotification="notification"></Notification>
@@ -75,8 +74,6 @@
                             </tbody>
                           </table>
                         </div>
-
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -106,10 +103,11 @@
     },
 
     methods: {
-      showStudent() {
+      showStudent(notification = '') {
         this.axios.get('api/students')
-          .then((res) => {
-            this.students = res.data
+          .then((response) => {
+            this.students = response.data;
+            this.notification = notification;
           })
           .catch((error) => {
             this.alert = error
@@ -121,15 +119,15 @@
         if (confirm('Are you sure?')) {
           this.axios.delete('api/students/' + id)
             .then((response) => {
-              if (response.data.ok) {
-                this.showStudent();
-                this.notification = response.data.message;
+              if (response.status === 200) {
+                this.showStudent(response.data.message);
+                // this.notification = ;
                 return this.$router.push({name: 'Student'});
               }
             })
             .catch((error) => {
               console.log('Error: something in wrong');
-              this.alert = error
+              console.log(error);
             });
         }
       }

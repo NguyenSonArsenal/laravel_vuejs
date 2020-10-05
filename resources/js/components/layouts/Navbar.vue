@@ -24,15 +24,28 @@
                         </div>
                     </li>
                     <li class="active">
-                        <a href="javascript:void(0);">
+                        <router-link :to="{name:'Dashboard'}">
                             <i class="fa fa-th-large"></i>
                             <span class="nav-label">Trang chủ</span>
-                        </a>
+                        </router-link>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <router-link :to="{name:'Student'}">
                             <i class="fa fa-th-large"></i>
                             <span class="nav-label">Học sinh</span>
+                        </router-link>
+                    </li>
+                    <li class="">
+                        <router-link :to="{name:'test_child_parent_component'}">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">Parent-Child-Component</span>
+                        </router-link>
+                    </li>
+
+                    <li class="">
+                        <router-link :to="{name:'demo_computed'}">
+                            <i class="fa fa-th-large"></i>
+                            <span class="nav-label">Computed-Demo</span>
                         </router-link>
                     </li>
                 </ul>
