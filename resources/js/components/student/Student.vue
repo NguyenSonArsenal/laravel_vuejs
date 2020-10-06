@@ -33,7 +33,10 @@
                       <div class="table-responsive">
 
                           <!-- Notification -->
-                          <Notification :propNotification="notification"></Notification>
+                          <Notification
+                              :propNotification="notification"
+                              @emitOnClose="notification = !notification">
+                          </Notification>
                           <!-- End notification -->
 
                           <table class="table table-striped table-bordered table-hover dataTables-example" id="">
@@ -54,7 +57,6 @@
                               <td>{{ student.full_name }}</td>
                               <td>{{ student.phone_number }}</td>
                               <td>{{ student.gender | showGender }}</td>
-                              <!--<td>{{ student.gender == 'M' ? 'Boy' : 'Girl' }}</td>-->
                               <td>{{ student.address }}</td>
                               <td>
                                 <a href=""
@@ -93,7 +95,6 @@
     data() {
       return {
         students: [],
-        alert: '',
         notification: ''
       }
     },
@@ -104,13 +105,15 @@
 
     methods: {
       showStudent(notification = '') {
+
         this.axios.get('api/students')
           .then((response) => {
             this.students = response.data;
             this.notification = notification;
+
           })
           .catch((error) => {
-            this.alert = error
+            alert(error);
           });
       },
 
@@ -121,8 +124,6 @@
             .then((response) => {
               if (response.status === 200) {
                 this.showStudent(response.data.message);
-                // this.notification = ;
-                return this.$router.push({name: 'Student'});
               }
             })
             .catch((error) => {

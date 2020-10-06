@@ -18,8 +18,7 @@
       </tbody>
     </table>
 
-    <!-- Bug -> Todo  -->
-    <p class="text-danger" v-if="notifyEmptyMessage"><strong>Hết rồi, chẳng còn gì để xóa</strong></p>
+    <p class="text-danger" v-if="propNotifyEmptyMessage"><strong>Hết rồi, chẳng còn gì để xóa</strong></p>
   </div>
 </template>
 
@@ -43,9 +42,9 @@
       }
     },
     watch: {
-      propNotifyEmptyMessage: function (val) { // val là giá trị mới of propNotifyEmptyMessage
-        this.notifyEmptyMessage = val;
-      },
+      // propNotifyEmptyMessage: function (val) { // val là giá trị mới of propNotifyEmptyMessage
+      //   this.notifyEmptyMessage = val;
+      // },
     },
     methods: {
       deleteMessage(messageId) {

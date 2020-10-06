@@ -2,10 +2,10 @@
 
 <template>
     <div>
-        <div v-if="propNotification" class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ propNotification }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true" @click="resetMessageNofification">&times;</span>
+        <div v-if="notificationX" class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ notificationX }}</strong>
+            <button type="button" @click="onClose">
+                <span aria-hidden="true">&times;</span>
             </button>
         </div>
     </div>
@@ -14,21 +14,15 @@
 
 <script>
     export default {
-        // name: 'notification',
         props: ['propNotification'],
-        created: function () {
-            // console.log('notification message from parent component');
-            // console.log(this.notification) //prints out an empty string
-        },
-        data() {
-            return {
-                notification: this.propNotification
-            }
+        computed: {
+            notificationX: function() {
+                return this.propNotification;
+            },
         },
         methods: {
-            resetMessageNofification () {
-                console.log('reset message notification');
-                this.notification = '';
+            onClose: function () {
+                this.$emit('emitOnClose');
             }
         }
     }

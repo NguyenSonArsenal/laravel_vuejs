@@ -2011,7 +2011,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['propListMessage', 'propNotifyEmptyMessage'],
   data: function data() {
@@ -2020,11 +2019,9 @@ __webpack_require__.r(__webpack_exports__);
       notifyEmptyMessage: this.propNotifyEmptyMessage
     };
   },
-  watch: {
-    propNotifyEmptyMessage: function propNotifyEmptyMessage(val) {
-      // val là giá trị mới of propNotifyEmptyMessage
-      this.notifyEmptyMessage = val;
-    }
+  watch: {// propNotifyEmptyMessage: function (val) { // val là giá trị mới of propNotifyEmptyMessage
+    //   this.notifyEmptyMessage = val;
+    // },
   },
   methods: {
     deleteMessage: function deleteMessage(messageId) {
@@ -2189,20 +2186,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // name: 'notification',
   props: ['propNotification'],
-  created: function created() {// console.log('notification message from parent component');
-    // console.log(this.notification) //prints out an empty string
-  },
-  data: function data() {
-    return {
-      notification: this.propNotification
-    };
+  computed: {
+    notificationX: function notificationX() {
+      return this.propNotification;
+    }
   },
   methods: {
-    resetMessageNofification: function resetMessageNofification() {
-      console.log('reset message notification');
-      this.notification = '';
+    onClose: function onClose() {
+      this.$emit('emitOnClose');
     }
   }
 });
@@ -2546,6 +2538,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2554,7 +2548,6 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       students: [],
-      alert: '',
       notification: ''
     };
   },
@@ -2570,7 +2563,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.students = response.data;
         _this.notification = notification;
       })["catch"](function (error) {
-        _this.alert = error;
+        alert(error);
       });
     },
     // Delete a student
@@ -2580,12 +2573,7 @@ __webpack_require__.r(__webpack_exports__);
       if (confirm('Are you sure?')) {
         this.axios["delete"]('api/students/' + id).then(function (response) {
           if (response.status === 200) {
-            _this2.showStudent(response.data.message); // this.notification = ;
-
-
-            return _this2.$router.push({
-              name: 'Student'
-            });
+            _this2.showStudent(response.data.message);
           }
         })["catch"](function (error) {
           console.log('Error: something in wrong');
@@ -4029,7 +4017,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm.notifyEmptyMessage
+    _vm.propNotifyEmptyMessage
       ? _c("p", { staticClass: "text-danger" }, [
           _c("strong", [_vm._v("Hết rồi, chẳng còn gì để xóa")])
         ])
@@ -4273,7 +4261,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.propNotification
+    _vm.notificationX
       ? _c(
           "div",
           {
@@ -4281,28 +4269,12 @@ var render = function() {
             attrs: { role: "alert" }
           },
           [
-            _c("strong", [_vm._v(_vm._s(_vm.propNotification))]),
+            _c("strong", [_vm._v(_vm._s(_vm.notificationX))]),
             _vm._v(" "),
             _c(
               "button",
-              {
-                staticClass: "close",
-                attrs: {
-                  type: "button",
-                  "data-dismiss": "alert",
-                  "aria-label": "Close"
-                }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    attrs: { "aria-hidden": "true" },
-                    on: { click: _vm.resetMessageNofification }
-                  },
-                  [_vm._v("×")]
-                )
-              ]
+              { attrs: { type: "button" }, on: { click: _vm.onClose } },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
             )
           ]
         )
@@ -4931,7 +4903,12 @@ var render = function() {
                             { staticClass: "table-responsive" },
                             [
                               _c("Notification", {
-                                attrs: { propNotification: _vm.notification }
+                                attrs: { propNotification: _vm.notification },
+                                on: {
+                                  emitOnClose: function($event) {
+                                    _vm.notification = !_vm.notification
+                                  }
+                                }
                               }),
                               _vm._v(" "),
                               _c(
