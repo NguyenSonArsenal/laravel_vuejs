@@ -8,8 +8,8 @@ class StudentController extends ApiBaseController
 {
     public function index()
     {
-        $students = Student::where('del_flag', getConfig('del_flag.on'))->orWhereNull('del_flag')->orderBy('id', 'desc')->get();
-        return $students;
+        $students = Student::where('del_flag', getConfig('del_flag.on'))->orWhereNull('del_flag')->orderBy('id', 'desc')->paginate(1);
+        return response($students);
     }
 
     public function destroy($id)

@@ -52,7 +52,7 @@
                             </thead>
 
                             <tbody>
-                            <tr v-for="(student, index) in students">
+                            <tr v-for="(student, index) in students.data">
                               <td>{{ student.id }}</td>
                               <td>{{ student.full_name }}</td>
                               <td>{{ student.phone_number }}</td>
@@ -75,7 +75,16 @@
                             </tr>
                             </tbody>
                           </table>
-                        </div>
+
+                          <!-- pagination -->
+                          <MyPagination
+                              @pagination-change-page="getStudents"
+                              :data="students"
+                              :limit="myPagination.limit"
+                          >
+                          </MyPagination>
+                          <!-- End pagination -->
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -94,23 +103,25 @@
     components: {Notification},
     data() {
       return {
-        students: [],
-        notification: ''
+        students: {},
+        notification: '',
+        myPagination: {
+          limit: 2
+        }
       }
     },
 
-    created: function () {
-      this.showStudent();
+    mounted() {
+      console.log('Component mounted');
+      // Fetch initial results
+      this.getStudents();
     },
 
     methods: {
-      showStudent(notification = '') {
-
-        this.axios.get('api/students')
+      getStudents(page = 1) {
+        this.axios.get('api/students?page=' + page)
           .then((response) => {
             this.students = response.data;
-            this.notification = notification;
-
           })
           .catch((error) => {
             alert(error);
@@ -123,7 +134,8 @@
           this.axios.delete('api/students/' + id)
             .then((response) => {
               if (response.status === 200) {
-                this.showStudent(response.data.message);
+                this.notification = response.data.message;
+                this.getStudents();
               }
             })
             .catch((error) => {

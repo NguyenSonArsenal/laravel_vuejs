@@ -8,6 +8,8 @@ import axios from 'axios';
 
 Vue.use(VueAxios, axios);
 
+Vue.component('MyPagination', require('laravel-vue-pagination'));
+
 import App from './components/App.vue';
 import Dashboard from './components/Dashboard.vue';
 import Student from './components/student/Student.vue';
