@@ -8,7 +8,9 @@ class StudentController extends ApiBaseController
 {
     public function index()
     {
-        $students = Student::where('del_flag', getConfig('del_flag.on'))->orWhereNull('del_flag')->orderBy('id', 'desc')->paginate(1);
+        $pagination = json_decode(request('pagination'));
+        $limit = property_exists($pagination, 'perPage') ? $pagination->perPage : getConfig('pagination.perPage');
+        $students = Student::where('del_flag', getConfig('del_flag.on'))->orWhereNull('del_flag')->orderBy('id', 'desc')->paginate($limit);
         return response($students);
     }
 

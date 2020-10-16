@@ -15,9 +15,9 @@
 </template>
 
 <script>
-    import Navbar from './layouts/Navbar.vue';
-    import HeaderTop from './layouts/HeaderTop.vue';
-    import Footer from './layouts/Footer.vue';
+    import Navbar from '../layouts/Navbar.vue';
+    import HeaderTop from '../layouts/HeaderTop.vue';
+    import Footer from '../layouts/Footer.vue';
 
     export default {
         // name: 'app',

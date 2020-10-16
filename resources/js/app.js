@@ -1,21 +1,23 @@
+// ========== Global component ==========
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-
-Vue.use(VueRouter);
-
 import VueAxios from 'vue-axios';
 import axios from 'axios';
+import LoadingComponent from './components/core/Loading'
 
+Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
-
+Vue.component('LoadingComponent', LoadingComponent);
 Vue.component('MyPagination', require('laravel-vue-pagination'));
+// ========== End Global component ==========
 
-import App from './components/App.vue';
-import Dashboard from './components/Dashboard.vue';
-import Student from './components/student/Student.vue';
-import StudentAdd from './components/student/StudentAdd.vue';
-import ChildParentComponent from './components/child_parent_component/Index.vue';
-import ComputedComponent from './components/computed/Demo.vue';
+import App from './components/views/App.vue';
+import Dashboard from './components/views/Dashboard.vue';
+import Student from './components/views/student/Student.vue';
+import StudentAdd from './components/views/student/StudentAdd.vue';
+import ChildParentComponent from './components/views/child_parent_component/Index.vue';
+import ComputedComponent from './components/views/computed/Demo.vue';
+
 
 const routes = [
     {

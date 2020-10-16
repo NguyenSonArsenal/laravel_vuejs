@@ -24,6 +24,9 @@
     <div class="wrapper wrapper-content animated fadeInRight ecommerce">
       <div class="row">
         <div class="col-lg-12">
+
+          <LoadingComponent :spin="loading.spin" :text="loading.text" :active="loading.processing" :duration="loading.duration"/>
+
           <div class="ibox">
             <div class="ibox-content">
               <div class="wrapper wrapper-content animated fadeInRight data_products">
@@ -80,7 +83,7 @@
                           <MyPagination
                               @pagination-change-page="getStudents"
                               :data="students"
-                              :limit="myPagination.limit"
+                              :limit="myPagination.perPage"
                           >
                           </MyPagination>
                           <!-- End pagination -->
@@ -98,7 +101,7 @@
 </template>
 
 <script>
-  import Notification from "../includes/Nofication";
+  import Notification from "../../includes/Nofication";
   export default {
     components: {Notification},
     data() {
@@ -106,8 +109,25 @@
         students: {},
         notification: '',
         myPagination: {
-          limit: 2
-        }
+          perPage: 5
+        },
+        router_url: "api/students",
+        loading: {
+          spin: 'mini',
+          text: 'Đang xử lý ...',
+          processing: false,
+          duration: 300
+        },
+        pagination: {
+          spage: 0,
+          ppage: 0,
+          npage: 0,
+          lpage: 0,
+          cpage: 1,
+          total: 0,
+          limit: 6,
+          pages: []
+        },
       }
     },
 
@@ -119,9 +139,16 @@
 
     methods: {
       getStudents(page = 1) {
-        this.axios.get('api/students?page=' + page)
+        this.loading.processing = true;
+
+        const pagination = {
+          perPage: this.myPagination.perPage,
+        };
+
+        this.axios.get('api/students?page=' + page + '&pagination=' + JSON.stringify(pagination))
           .then((response) => {
             this.students = response.data;
+            this.loading.processing = false;
           })
           .catch((error) => {
             alert(error);
@@ -131,19 +158,45 @@
       // Delete a student
       deleteStudent(id) {
         if (confirm('Are you sure?')) {
+          this.loading.processing = true;
           this.axios.delete('api/students/' + id)
             .then((response) => {
               if (response.status === 200) {
                 this.notification = response.data.message;
                 this.getStudents();
               }
+              this.loading.processing = false;
             })
             .catch((error) => {
               console.log('Error: something in wrong');
               console.log(error);
             });
         }
-      }
+      },
+
+      goTo(link) {
+        const info = link.toString().split("/");
+        const page = info.length > 1 ? info[info.length - 1] : 1;
+        this.pagination.cpage = parseInt(page);
+        this.getStudent2();
+      },
+
+      getStudent2() {
+        this.loading.processing = true;
+
+        const pagination = {
+          perPage: this.myPagination.perPage,
+        };
+
+        this.axios.get('api/students?pagination=' + JSON.stringify(pagination))
+          .then((response) => {
+            this.students = response.data;
+            this.loading.processing = false;
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      },
     },
 
     filters: {
