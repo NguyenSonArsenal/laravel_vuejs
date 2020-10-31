@@ -19,9 +19,12 @@
     },
     "dependencies": {
         "@detools/vue-form": "^5.13.3",
+        "@saeris/vue-spinners": "^1.0.8",
+        "@vue/cli": "^4.5.8",
         "laravel-vue-pagination": "^2.3.1",
         "vue": "^2.6.12",
         "vue-axios": "^2.1.5",
-        "vue-router": "^3.4.3"
+        "vue-router": "^3.4.3",
+        "vue-spinner": "^1.0.4"
     }
 }

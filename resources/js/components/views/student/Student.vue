@@ -2,7 +2,7 @@
   <div>
     <div class="row wrapper border-bottom white-bg page-heading page_products">
       <div class="col-lg-10">
-        <h2>Danh sách học sinh {{ students.length }}</h2>
+        <h2>Danh sách học sinh</h2>
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="">Trang chủ</a>
@@ -21,78 +21,68 @@
       </div>
     </div>
 
-    <div class="wrapper wrapper-content animated fadeInRight ecommerce">
-      <div class="row">
-        <div class="col-lg-12">
+    <div class="wrapper wrapper-content" >
 
-          <LoadingComponent :spin="loading.spin" :text="loading.text" :active="loading.processing" :duration="loading.duration"/>
+      <div class="ibox-content" >
 
-          <div class="ibox">
-            <div class="ibox-content">
-              <div class="wrapper wrapper-content animated fadeInRight data_products">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="ibox ">
-                      <div class="table-responsive">
+        <div class="loading1" v-if="loading.processing">
+          <img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/>
+        </div>
 
-                          <!-- Notification -->
-                          <Notification
-                              :propNotification="notification"
-                              @emitOnClose="notification = !notification">
-                          </Notification>
-                          <!-- End notification -->
+        <!-- Notification -->
+        <Notification
+            :propNotification="notification"
+            @emitOnClose="notification = !notification">
+        </Notification>
+        <!-- End notification -->
 
-                          <table class="table table-striped table-bordered table-hover dataTables-example" id="">
-                            <thead>
-                            <tr>
-                              <th>ID</th>
-                              <th>Name</th>
-                              <th>Phone</th>
-                              <th>Gender</th>
-                              <th>Address</th>
-                              <th>Actions</th>
-                            </tr>
-                            </thead>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover dataTables-example" id="">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Gender</th>
+              <th>Address</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
 
-                            <tbody>
-                            <tr v-for="(student, index) in students.data">
-                              <td>{{ student.id }}</td>
-                              <td>{{ student.full_name }}</td>
-                              <td>{{ student.phone_number }}</td>
-                              <td>{{ student.gender | showGender }}</td>
-                              <td>{{ student.address }}</td>
-                              <td>
-                                <a href=""
-                                   class="btn-primary btn btn-xs rounded">
-                                  <i class="fa fa-edit">Sửa</i>
-                                </a>
+            <tbody>
+            <tr v-for="(student, index) in students.list">
+              <td>{{ student.id }}</td>
+              <td>{{ student.full_name }}</td>
+              <td>{{ student.phone_number }}</td>
+              <td>{{ student.gender | showGender }}</td>
+              <td>{{ student.address }}</td>
+              <td>
+                <a href=""
+                   class="btn-primary btn btn-xs rounded">
+                  <i class="fa fa-edit">Sửa</i>
+                </a>
 
-                                <a href="#model_confirm_delete" @click="deleteStudent(student.id, index)"
-                                   class="btn-danger btn btn-xs model_confirm_delete rounded"
-                                   data-toggle="modal"
-                                   data-form-action="">
-                                  <i class="fa fa-trash">Delete</i>
-                                </a>
+                <a href="#model_confirm_delete" @click="deleteStudent(student.id, index)"
+                   class="btn-danger btn btn-xs model_confirm_delete rounded"
+                   data-toggle="modal"
+                   data-form-action="">
+                  <i class="fa fa-trash">Delete</i>
+                </a>
 
-                              </td>
-                            </tr>
-                            </tbody>
-                          </table>
+              </td>
+            </tr>
+            </tbody>
+          </table>
 
-                          <!-- pagination -->
-                          <MyPagination
-                              @pagination-change-page="getStudents"
-                              :data="students"
-                              :limit="myPagination.perPage"
-                          >
-                          </MyPagination>
-                          <!-- End pagination -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="table-footer">
+            <div class="paging-info"><strong>Tổng số {{ students.total }} bản ghi</strong></div>
+            <MyPagination
+                @pagination-change-page="getStudents"
+                :data="students.pagination"
+                :limit="myPagination.limit"
+            >
+            </MyPagination>
+            <div style="clear: both"></div>
           </div>
         </div>
       </div>
@@ -102,11 +92,24 @@
 
 <script>
   import Notification from "../../includes/Nofication";
+
+  import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+  import BarLoader from '@saeris/vue-spinners'
+
   export default {
-    components: {Notification},
+    components: {
+      Notification,
+      PulseLoader,
+      BarLoader
+    },
     data() {
       return {
-        students: {},
+        students: {
+          pagination: {},
+          list: [],
+          total: ''
+        }, // for paginate
+
         notification: '',
         myPagination: {
           perPage: 5
@@ -118,22 +121,10 @@
           processing: false,
           duration: 300
         },
-        pagination: {
-          spage: 0,
-          ppage: 0,
-          npage: 0,
-          lpage: 0,
-          cpage: 1,
-          total: 0,
-          limit: 6,
-          pages: []
-        },
       }
     },
 
-    mounted() {
-      console.log('Component mounted');
-      // Fetch initial results
+    created() {
       this.getStudents();
     },
 
@@ -147,7 +138,9 @@
 
         this.axios.get('api/students?page=' + page + '&pagination=' + JSON.stringify(pagination))
           .then((response) => {
-            this.students = response.data;
+            this.students.pagination = response.data;
+            this.students.list = this.students.pagination.data;
+            this.students.total = this.students.pagination.total;
             this.loading.processing = false;
           })
           .catch((error) => {
@@ -209,3 +202,82 @@
     },
   }
 </script>
+
+
+<style>
+  .loading {
+    border: 1px solid red;
+    background-color: white;
+    position: fixed;
+    display: block;
+    top: 0;
+    bottom: 0;
+    z-index: 1000000;
+    opacity: 0.75;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+
+  .loading img {
+    width: 65px;
+    margin: auto;
+    display: block;
+    top: calc(50% - 100px);
+    left: calc(50% - 10px);
+    position: absolute;
+    z-index: 999999;
+  }
+
+  .loading1 {
+    background-color: white;
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    z-index: 1000000;
+    opacity: 0.75;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+
+  .loading1 img {
+    width: 65px;
+    margin: auto;
+    display: block;
+    top: calc(50% - 100px);
+    left: calc(50% - 10px);
+    position: absolute;
+    z-index: 999999;
+  }
+
+  .ibox-content {
+    position: relative;
+  }
+
+  .table-footer {
+    vertical-align: middle;
+    margin: 0 auto;
+    height: 31px;
+  }
+
+  .paging-info {
+    float: left;
+    text-align: left;
+    margin: 0 auto;
+    vertical-align: middle;
+    display: inline-flex;
+    line-height: 30px;
+    font-style: italic;
+  }
+
+  ul.pagination {
+    text-align: right;
+    float: right;
+    display: inline-flex;
+    margin-bottom: 0;
+    vertical-align: middle;
+    margin: 0 auto;
+  }
+</style>

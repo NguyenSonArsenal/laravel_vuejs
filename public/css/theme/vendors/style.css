@@ -4570,7 +4570,7 @@ video {
   padding: 0 20px;
 }
 .wrapper-content {
-  padding: 20px 10px 40px;
+  padding: 20px 10px 20px 10px;
 }
 #page-wrapper {
   padding: 0 15px;
@@ -4932,7 +4932,7 @@ code {
 .ibox-content {
   background-color: #ffffff;
   color: inherit;
-  /*padding: 15px 20px 20px 20px;*/
+  padding: 10px 10px 10px 10px;
   border-color: #e7eaec;
   border-image: none;
   border-style: solid;
