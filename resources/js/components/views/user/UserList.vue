@@ -49,19 +49,19 @@
             </thead>
 
             <tbody>
-            <tr v-for="(student, index) in students.list">
-              <td>{{ student.id }}</td>
-              <td>{{ student.full_name }}</td>
-              <td>{{ student.phone_number }}</td>
-              <td>{{ student.gender | showGender }}</td>
-              <td>{{ student.address }}</td>
+            <tr v-for="(user, index) in users.list">
+              <td>{{ user.id }}</td>
+              <td>{{ user.userName }}</td>
+              <td>{{ user.userPhone }}</td>
+              <td>{{ user.userGender | showGender }}</td>
+              <td>{{ user.userAddress }}</td>
               <td>
                 <a href=""
                    class="btn-primary btn btn-xs rounded">
                   <i class="fa fa-edit">Sửa</i>
                 </a>
 
-                <a href="#model_confirm_delete" @click="deleteStudent(student.id, index)"
+                <a href="#model_confirm_delete" @click="deleteAUser(user.id, index)"
                    class="btn-danger btn btn-xs model_confirm_delete rounded"
                    data-toggle="modal"
                    data-form-action="">
@@ -74,10 +74,10 @@
           </table>
 
           <div class="table-footer">
-            <div class="paging-info"><strong>Tổng số {{ students.total }} bản ghi</strong></div>
+            <div class="paging-info"><strong>Tổng số {{ users.total }} bản ghi</strong></div>
             <MyPagination
-                @pagination-change-page="getStudents"
-                :data="students.pagination"
+                @pagination-change-page="getUsers"
+                :data="users.pagination"
                 :limit="myPagination.limit"
             >
             </MyPagination>
@@ -103,7 +103,7 @@
     },
     data() {
       return {
-        students: {
+        users: {
           pagination: {},
           list: [],
           total: ''
@@ -113,7 +113,7 @@
         myPagination: {
           perPage: 5
         },
-        router_url: "api/students",
+        router_url: "api/users",
         loading: {
           spin: 'mini',
           text: 'Đang xử lý ...',
@@ -124,22 +124,22 @@
     },
 
     created() {
-      this.getStudents();
+      this.getUsers();
     },
 
     methods: {
-      getStudents(page = 1) {
+      getUsers(page = 1) {
         this.loading.processing = true;
 
         const pagination = {
           perPage: this.myPagination.perPage,
         };
 
-        this.axios.get('api/students?page=' + page + '&pagination=' + JSON.stringify(pagination))
+        this.axios.get('api/users?page=' + page + '&pagination=' + JSON.stringify(pagination))
           .then((response) => {
-            this.students.pagination = response.data;
-            this.students.list = this.students.pagination.data;
-            this.students.total = this.students.pagination.total;
+            this.users.pagination = response.data;
+            this.users.list = this.users.pagination.data;
+            this.users.total = this.users.pagination.total;
             this.loading.processing = false;
           })
           .catch((error) => {
@@ -148,19 +148,19 @@
       },
 
       // Delete a student
-      deleteStudent(id) {
+      deleteAUser(id) {
         if (confirm('Are you sure?')) {
           this.loading.processing = true;
-          this.axios.delete('api/students/' + id)
+          this.axios.delete('api/users/' + id)
             .then((response) => {
               if (response.status === 200) {
                 this.notification = response.data.message;
-                this.getStudents();
+                this.getUsers();
               }
               this.loading.processing = false;
             })
             .catch((error) => {
-              console.log('Error: something in wrong');
+              console.log('Error delete a user function: something in wrong');
               console.log(error);
             });
         }
@@ -170,19 +170,19 @@
         const info = link.toString().split("/");
         const page = info.length > 1 ? info[info.length - 1] : 1;
         this.pagination.cpage = parseInt(page);
-        this.getStudent2();
+        this.getUser2();
       },
 
-      getStudent2() {
+      getUser2() {
         this.loading.processing = true;
 
         const pagination = {
           perPage: this.myPagination.perPage,
         };
 
-        this.axios.get('api/students?pagination=' + JSON.stringify(pagination))
+        this.axios.get('api/users?pagination=' + JSON.stringify(pagination))
           .then((response) => {
-            this.students = response.data;
+            this.users = response.data;
             this.loading.processing = false;
           })
           .catch((error) => {

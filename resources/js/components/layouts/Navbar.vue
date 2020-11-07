@@ -30,9 +30,9 @@
                         </router-link>
                     </li>
                     <li class="">
-                        <router-link :to="{name:'Student'}">
+                        <router-link :to="{name:'User'}">
                             <i class="fa fa-th-large"></i>
-                            <span class="nav-label">Học sinh</span>
+                            <span class="nav-label">Users</span>
                         </router-link>
                     </li>
                     <li class="">

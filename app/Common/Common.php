@@ -10,6 +10,13 @@ if (!function_exists('getConfig')) {
     }
 }
 
+if (!function_exists('getSystemConfig')) {
+    function getSystemConfig($key, $default = '')
+    {
+        return config('systems.' . $key, $default);
+    }
+}
+
 if (!function_exists('getConstant')) {
     function getConstant($key, $default = '')
     {

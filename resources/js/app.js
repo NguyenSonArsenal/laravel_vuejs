@@ -7,9 +7,9 @@ import LoadingComponent from './components/core/Loading'
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
-Vue.component('LoadingComponent', LoadingComponent);
 Vue.component('MyPagination', require('laravel-vue-pagination'));
-// ========== End Global component ==========
+Vue.component('LoadingComponent', LoadingComponent);
+// ========== End Global Component ==========
 
 import App from './components/views/App.vue';
 import Dashboard from './components/views/Dashboard.vue';
@@ -17,39 +17,17 @@ import Student from './components/views/student/Student.vue';
 import StudentAdd from './components/views/student/StudentAdd.vue';
 import ChildParentComponent from './components/views/child_parent_component/Index.vue';
 import ComputedComponent from './components/views/computed/Demo.vue';
+import User from './components/views/user/UserList.vue';
 
 
 const routes = [
-    {
-        path: '/',
-        name: 'Dashboard',
-        component: Dashboard
-    },
-    {
-        path: '/students',
-        name: 'Student',
-        component: Student
-    },
-    {
-        path: '/students/add',
-        name: 'StudentAdd',
-        component: StudentAdd
-    },
-    {
-        path: '/students',
-        name: 'StudentStore',
-        component: StudentAdd
-    },
-    {
-        path: '/child_parent_component',
-        name: 'test_child_parent_component',
-        component: ChildParentComponent
-    },
-    {
-        path: '/computed',
-        name: 'demo_computed',
-        component: ComputedComponent
-    }
+    {component: Dashboard, name: 'Dashboard', path: '/'},
+    {component: Student, name: 'Student', path: '/students'},
+    {component: StudentAdd, name: 'StudentAdd', path: '/students/add'},
+    {component: StudentAdd, name: 'StudentStore', path: '/students'},
+    {component: User, name: 'User', path: '/users'},
+    {component: ChildParentComponent, name: 'test_child_parent_component', path: '/child_parent_component'},
+    {component: ComputedComponent, name: 'demo_computed', path: '/computed'}
 ];
 
 const router = new VueRouter({
