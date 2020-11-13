@@ -10,6 +10,18 @@ class BaseController extends Controller
     protected $_ajaxData = [];
     protected $_ok = true;
 
+    protected $_repository = null;
+
+    public function setRepository($repository)
+    {
+        $this->_repository = $repository;
+    }
+
+    public function getRepository()
+    {
+        return $this->_repository;
+    }
+
     public function ajaxGetCode()
     {
         return $this->_ajaxCode;

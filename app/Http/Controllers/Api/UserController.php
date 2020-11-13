@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\User;
+use App\Models\Entities\User;
+use App\Repositories\UserRepository;
+use App\Validators\User as UserValidator;
 
 class UserController extends ApiBaseController
 {
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->setRepository($userRepository);
+    }
+
     public function index()
     {
         $pagination = json_decode(request('pagination'));
@@ -33,15 +40,23 @@ class UserController extends ApiBaseController
 
     public function store()
     {
+        $params = [
+            'userName' => '',
+            'userPhone' => '',
+            'userGender' => '',
+            'userAddress' => '',
+        ];
+
+        /** @var UserValidator $validator */
+        $validator = $this->getRepository()->getValidator();
+
+        if (!$validator->backendValidateStoreUser($params)) {
+            $this->ajaxSetMessage($validator->errors());
+            return $this->renderErrorJson(505);
+        }
+
         try {
             $entity = new User();
-            $params = [
-                'full_name' => request('full_name'),
-                'address' => request('address'),
-                'phone_number' => request('phone_number'),
-                'gender' => request('gender'),
-                'date_of_birth' => request('date_of_birth'),
-            ];
             $entity->fill($params);
             $entity->save();
 

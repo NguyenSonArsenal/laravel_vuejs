@@ -6,17 +6,17 @@
         <h2>Học sinh: Thêm mới</h2>
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <router-link :to="{name:'Dashboard'}">Home</router-link>
+            <router-link :to="{name:'Dashboard'}">Trang chủ</router-link>
           </li>
           <li class="breadcrumb-item active">
-            <router-link :to="{name:'Student'}"><strong> Học sinh </strong></router-link>
+            <router-link :to="{name:'User'}"><strong> Học sinh </strong></router-link>
           </li>
         </ol>
       </div>
       <div class="col-lg-2">
         <h2>
           <!-- @todo backUrl -->
-          <router-link :to="{name:'Student'}" class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
+          <router-link :to="{name:'User'}" class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
             <strong>Quay lại</strong>
           </router-link>
         </h2>
@@ -37,9 +37,9 @@
                 <div class="panel-body">
                   <form action="" method="POST">
 
-                    <div class="error alert alert-danger" v-if="errors.length > 0">
+                    <div class="error alert alert-danger" v-if="errorsValidate.length > 0">
                       <ul class="mb-0">
-                        <li v-for="error in errors">{{ error }}</li>
+                        <li v-for="error in errorsValidate">{{ error }}</li>
                       </ul>
                     </div>
 
@@ -89,11 +89,11 @@
                     <div class="form-group row">
                       <div class="col-12">
                         <!-- @todo  add back url -->
-                        <router-link :to="{name: 'Student'}">
+                        <router-link :to="{name: 'User'}">
                           <button class="btn btn-primary btn-sm" type="button">Hủy</button>
                         </router-link>
 
-                        <input class="btn btn-primary btn-sm" type="button" value="Thêm mới" v-on:click="addStudent()">
+                        <input class="btn btn-primary btn-sm" type="button" value="Thêm mới" v-on:click="addUser()">
                       </div>
                     </div>
                   </form>
@@ -125,7 +125,7 @@
 
     data() {
       return {
-        errors: [],
+        errorsValidate: [],
         student: {
           full_name: '',
           address: '',
@@ -138,7 +138,7 @@
     },
 
     methods: {
-      checkFormAddStudent: function (e) {
+      checkFormAddUser: function (e) {
         return true;
         if (this.student.full_name) {
           return true;
@@ -154,12 +154,13 @@
         e.preventDefault();
       },
 
-      addStudent() {
-        this.axios.post('/api/students', this.student)
+      addUser() {
+        this.axios.post('/api/users', this.student)
           .then((response) => {
-            if (response.status === 200) {
+            if (response.data.code === 200) {
               this.notification = response.data.message;
-              return this.$router.push({name: 'Student'});
+            } else if(response.data.code == 505) { // Errors validate
+              this.errorsValidate = response.data.message;
             }
           })
           .catch((error) => {

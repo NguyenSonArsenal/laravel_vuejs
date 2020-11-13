@@ -18,6 +18,7 @@ import StudentAdd from './components/views/student/StudentAdd.vue';
 import ChildParentComponent from './components/views/child_parent_component/Index.vue';
 import ComputedComponent from './components/views/computed/Demo.vue';
 import User from './components/views/user/UserList.vue';
+import UserAdd from './components/views/user/UserAdd.vue';
 
 
 const routes = [
@@ -26,6 +27,7 @@ const routes = [
     {component: StudentAdd, name: 'StudentAdd', path: '/students/add'},
     {component: StudentAdd, name: 'StudentStore', path: '/students'},
     {component: User, name: 'User', path: '/users'},
+    {component: UserAdd, name: 'UserAdd', path: '/users/add'},
     {component: ChildParentComponent, name: 'test_child_parent_component', path: '/child_parent_component'},
     {component: ComputedComponent, name: 'demo_computed', path: '/computed'}
 ];

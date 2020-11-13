@@ -14,7 +14,7 @@
       </div>
       <div class="col-lg-2">
         <h2>
-          <router-link :to="{name:'StudentAdd'}" class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
+          <router-link :to="{name:'UserAdd'}" class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
             <strong>Thêm mới</strong>
           </router-link>
         </h2>
