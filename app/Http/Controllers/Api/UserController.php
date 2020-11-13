@@ -40,19 +40,15 @@ class UserController extends ApiBaseController
 
     public function store()
     {
-        $params = [
-            'userName' => '',
-            'userPhone' => '',
-            'userGender' => '',
-            'userAddress' => '',
-        ];
+        $params = request()->all();
+        $params['userGender'] = $params['userGender']['id'];
 
         /** @var UserValidator $validator */
         $validator = $this->getRepository()->getValidator();
 
         if (!$validator->backendValidateStoreUser($params)) {
-            $this->ajaxSetMessage($validator->errors());
-            return $this->renderErrorJson(505);
+            $this->ajaxSetErrorValidate($validator->errors());
+            return $this->renderErrorJson();
         }
 
         try {

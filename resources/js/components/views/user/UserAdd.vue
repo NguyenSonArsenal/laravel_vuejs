@@ -16,7 +16,7 @@
       <div class="col-lg-2">
         <h2>
           <!-- @todo backUrl -->
-          <router-link :to="{name:'User'}" class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
+          <router-link :to="{name:'User'}" class="btn btn-sm btn-secondary float-right m-t-n-xs" type="submit">
             <strong>Quay lại</strong>
           </router-link>
         </h2>
@@ -33,6 +33,7 @@
               </li>
             </ul>
             <div class="tab-content">
+              <div class="loading1" v-if="loading.processing"><img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/></div>
               <div id="tab-1" class="tab-pane active">
                 <div class="panel-body">
                   <form action="" method="POST">
@@ -46,17 +47,17 @@
                     <div class="row">
                       <div class="col-3">
                         <label class="col-form-label">Tên đầy đủ: <span class="input_label_required">*</span></label>
-                        <input type="text" autofocus v-model="student.full_name" class="form-control">
+                        <input type="text" autofocus v-model="user.userName" class="form-control">
                       </div>
 
                       <div class="col-3">
                         <label class="col-form-label">SĐT: <span class="input_label_required">*</span></label>
-                        <input type="text" autofocus v-model="student.phone_number" class="form-control">
+                        <input type="text" autofocus v-model="user.userPhone" class="form-control">
                       </div>
 
                       <div class="col-3">
-                        <label class="col-form-label">Địa chỉ: </label>
-                        <input type="text" autofocus v-model="student.address" class="form-control">
+                        <label class="col-form-label">Email: <span class="input_label_required">*</span></label>
+                        <input type="text" autofocus v-model="user.userEmail" class="form-control">
                       </div>
 
                       <div class="col-3">
@@ -65,8 +66,8 @@
                             label="name"
                             class="v-select"
                             placeholder="Chọn giới tính"
-                            :options="student.gender"
-                            v-model="student.objGender"
+                            :options="user.listGender"
+                            v-model="user.userGender"
                             :close-on-select="true"
                             :clear-on-select="false"
                             :searchable="true"
@@ -74,26 +75,23 @@
                       </div>
                     </div>
 
-                    <!--<div class="form-group row">-->
-                    <!--<label class="col-sm-2 col-form-label">Ngày sinh:</label>-->
-                    <!--<div class="col-sm-8">-->
-                    <!--<div class="input-group date">-->
-                    <!--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
-                    <!--<input type="text" name="date_of_birth" v-model="student.date_of_birth" class="form-control">-->
-                    <!--</div>-->
-                    <!--<span>Birthday is {{student.date_of_birth}}</span>-->
-                    <!--</div>-->
-                    <!--</div>-->
+                    <br>
+                    <div class="row">
+                      <div class="col-3">
+                        <label class="col-form-label">Địa chỉ: </label>
+                        <input type="text" autofocus v-model="user.userAddress" class="form-control">
+                      </div>
+                    </div>
 
                     <br>
                     <div class="form-group row">
                       <div class="col-12">
+                        <input class="btn btn-primary btn-sm" type="button" value="Thêm mới" v-on:click="addUser()">
+
                         <!-- @todo  add back url -->
                         <router-link :to="{name: 'User'}">
-                          <button class="btn btn-primary btn-sm" type="button">Hủy</button>
+                          <button class="btn btn-secondary btn-sm" type="button">Quay lại</button>
                         </router-link>
-
-                        <input class="btn btn-primary btn-sm" type="button" value="Thêm mới" v-on:click="addUser()">
                       </div>
                     </div>
                   </form>
@@ -111,29 +109,30 @@
 <script>
   import "vue-select/dist/vue-select.css";
   import VueSelect from 'vue-select';
-
-  $(document).ready(function () {
-    $("input[name='date_of_birth']").datepicker({});
-  });
+  import loader from "../../../components/core/Loading";
 
   export default {
     name: 'student-add',
 
     components: {
-      VueSelect
+      VueSelect,
+      loader
     },
 
     data() {
       return {
         errorsValidate: [],
-        student: {
-          full_name: '',
-          address: '',
-          phone_number: '',
-          gender: [{id: 1, name: "Nam"}, {id: 2, name: "Nữ"}],
-          objGender: {id: 1, name: "Nam"},
-          date_of_birth: '',
-        }
+        user: {
+          userName: '',
+          userAddress: '',
+          userEmail: '',
+          userPhone: '',
+          listGender: [{id: 1, name: "Nam"}, {id: 2, name: "Nữ"}],
+          userGender: {id: 1, name: "Nam"},
+        },
+        loading: {
+          processing: false,
+        },
       }
     },
 
@@ -155,13 +154,16 @@
       },
 
       addUser() {
-        this.axios.post('/api/users', this.student)
+        this.loading.processing = true;
+        this.axios.post('/api/users', this.user)
           .then((response) => {
             if (response.data.code === 200) {
               this.notification = response.data.message;
-            } else if(response.data.code == 505) { // Errors validate
+              this.$router.push({ name: 'User' });
+            } else { // Errors validate
               this.errorsValidate = response.data.message;
             }
+            this.loading.processing = false;
           })
           .catch((error) => {
             this.alert = error

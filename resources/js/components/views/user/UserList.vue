@@ -25,9 +25,7 @@
 
       <div class="ibox-content" >
 
-        <div class="loading1" v-if="loading.processing">
-          <img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/>
-        </div>
+        <div class="loading1" v-if="loading.processing"><img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/></div>
         <!-- Notification -->
         <Notification
             :propNotification="notification"
@@ -196,7 +194,7 @@
         if (!gender) {
           return '';
         }
-        return gender.toUpperCase() == 'M' ? 'Boy' : 'Girl';
+        return gender == 1 ? 'Nam' : 'Nữ';
       },
     },
   }

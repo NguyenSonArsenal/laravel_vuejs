@@ -15,13 +15,27 @@ class User extends BaseValidator
     public function backendValidateStoreUser($params = [])
     {
         $rules = [
-            'userName' => 'required',
-            'userPhone' => 'bail|required',
-            'userGender' => 'bail|required',
-            'userAddress' => 'bail|required',
+            'userName' => 'required|max:64',
+            'userPhone' => ['bail', 'required', 'regex:/^(84|0[1|8|9])([0-9]{8,9})$/', 'unique:users,userPhone'],
+            'userEmail' => 'bail|required|email|max:64|unique:users,userEmail',
         ];
 
         return $this->validate($rules, $params);
     }
     // ========== END BACKEND AREA ==========
+
+    protected function _setCustomAttributes()
+    {
+        return [
+            'userName' => 'Tên đầy đủ',
+            'userPhone' => 'SĐT',
+            'userEmail' => 'Email',
+        ];
+    }
+
+    protected function _setCustomMessage()
+    {
+        $message['userPhone.regex'] = 'Vui lòng nhập trường SĐT bắt đầu với 01, 08 hoặc 09 và là những số và có độ dài 10 hoặc 11 kí tự';
+        return $message;
+    }
 }

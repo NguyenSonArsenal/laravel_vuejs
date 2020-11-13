@@ -52,6 +52,14 @@ class BaseController extends Controller
         return $this->_ajaxMessage = $msg;
     }
 
+    public function ajaxSetErrorValidate($msg = [])
+    {
+        if (!is_array($msg)) {
+        $msg = (array)$msg;
+    }
+        return $this->_ajaxMessage = $msg;
+    }
+
     public function ajaxGetOk()
     {
         return $this->_ok;
