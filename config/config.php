@@ -1,12 +1,20 @@
 <?php
 
 return [
+    'backend' => [
+        'pagination' => [
+            'perPage' => 20
+        ],
+    ],
+    'database' => [
+        'gender' => [
+            'boy' => ['id' => 1, 'alias' => 'Nam'],
+            'girl' => ['id' => 2, 'alias' => 'Nữ']
+        ]
+    ],
     'del_flag' => [
         'on' => 0,
         'off' => 1
-    ],
-    'pagination' => [
-        'perPage' => 20
     ],
     'common' => [
         'status' => [

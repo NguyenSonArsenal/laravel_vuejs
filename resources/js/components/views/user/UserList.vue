@@ -14,8 +14,8 @@
       </div>
       <div class="col-lg-2">
         <h2>
-          <router-link :to="{name:'UserAdd'}" class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
-            <strong>Thêm mới</strong>
+          <router-link :to="{name:'UserAdd'}" class="btn btn-sm btn-primary float-right m-t-n-xs">
+            <i class="fa fa-plus"></i> Thêm mới
           </router-link>
         </h2>
       </div>
@@ -72,7 +72,12 @@
           </table>
 
           <div class="table-footer">
-            <div class="paging-info"><strong>Tổng số {{ users.total }} bản ghi</strong></div>
+            <div class="paging-info">
+              <small>
+                Đang hiển thị trang {{ users.pagination.current_page }}/{{ users.pagination.last_page }} với {{ users.pagination.per_page }} bản ghi mỗi trang,
+                tổng số có {{ users.pagination.last_page }} trang {{ users.total }} bản ghi
+              </small>
+            </div>
             <MyPagination
                 @pagination-change-page="getUsers"
                 :data="users.pagination"
@@ -88,16 +93,11 @@
 </template>
 
 <script>
-  import Notification from "../../includes/Nofication";
-
-  import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-  import BarLoader from '@saeris/vue-spinners'
+  import Notification from "../../includes/Notification";
 
   export default {
     components: {
       Notification,
-      PulseLoader,
-      BarLoader
     },
     data() {
       return {
@@ -138,6 +138,9 @@
             this.users.pagination = response.data;
             this.users.list = this.users.pagination.data;
             this.users.total = this.users.pagination.total;
+
+            console.log('pagination', this.users.pagination);
+
             this.loading.processing = false;
           })
           .catch((error) => {

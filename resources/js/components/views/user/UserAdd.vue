@@ -16,9 +16,7 @@
       <div class="col-lg-2">
         <h2>
           <!-- @todo backUrl -->
-          <router-link :to="{name:'User'}" class="btn btn-sm btn-secondary float-right m-t-n-xs" type="submit">
-            <strong>Quay lại</strong>
-          </router-link>
+          <router-link :to="{name:'User'}" class="btn btn-sm btn-secondary float-right m-t-n-xs"><i class="fa fa-arrow-circle-left"></i> Quay lại</router-link>
         </h2>
       </div>
     </div>
@@ -86,11 +84,11 @@
                     <br>
                     <div class="form-group row">
                       <div class="col-12">
-                        <input class="btn btn-primary btn-sm" type="button" value="Thêm mới" v-on:click="addUser()">
+                        <button class="btn btn-primary btn-sm" type="button" @click="addUser()"><i class="fa fa-save"> Lưu</i></button>
 
                         <!-- @todo  add back url -->
                         <router-link :to="{name: 'User'}">
-                          <button class="btn btn-secondary btn-sm" type="button">Quay lại</button>
+                          <button class="btn btn-secondary btn-sm" type="button"><i class="fa fa-arrow-circle-left"></i> Quay lại</button>
                         </router-link>
                       </div>
                     </div>
@@ -103,20 +101,51 @@
       </div>
     </div>
 
+    <div class="modal fade show" id="modalInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="modal.addNewUser.isShow = !modal.addNewUser.isShow">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Thêm mới thành công
+          </div>
+          <div class="modal-footer">
+            <router-link :to="{name: 'User'}">
+              <button class="btn btn-secondary btn-sm" type="button" @click="modal.addNewUser.isShow = !modal.addNewUser.isShow">
+                <i class="fa fa-arrow-circle-left"></i> Quay lại
+              </button>
+            </router-link>
+            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" aria-label="Close"
+                    @click="modal.addNewUser.isShow = !modal.addNewUser.isShow"><i class="fa fa-repeat"></i> OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--<Modal-->
+        <!--:propModalIsShow="modal.addNewUser.isShow"-->
+        <!--:propModalBackTo="modal.addNewUser.backTo"-->
+    <!--&gt;</Modal>-->
+
   </div>
 </template>
 
 <script>
   import "vue-select/dist/vue-select.css";
   import VueSelect from 'vue-select';
-  import loader from "../../../components/core/Loading";
+  import Modal from "../../includes/Modal";
 
   export default {
-    name: 'student-add',
+    name: 'user-add',
 
     components: {
       VueSelect,
-      loader
+      Modal
     },
 
     data() {
@@ -133,41 +162,52 @@
         loading: {
           processing: false,
         },
+        modal: {
+          addNewUser: {
+            isShow: false,
+            backTo: 'User'
+          }
+        }
+      }
+    },
+
+    computed: {
+      getIsShowModalAddNewUser() {
+        return this.modal.addNewUser.isShow;
+      }
+    },
+
+    watch: {
+      getIsShowModalAddNewUser: function () {
+        if (this.modal.addNewUser.isShow) {
+          $("#modalInformation").modal('show');
+        } else {
+          $("#modalInformation").modal('hide');
+        }
       }
     },
 
     methods: {
-      checkFormAddUser: function (e) {
-        return true;
-        if (this.student.full_name) {
-          return true;
-        }
-
-        this.errors = [];
-
-        if (!this.student.full_name || !this.student.phone_number) {
-          this.errors.push('Tên đầy đủ là bắt buộc nhập')
-          this.errors.push('SĐT là bắt buộc nhập')
-        }
-
-        e.preventDefault();
-      },
-
       addUser() {
-        this.loading.processing = true;
-        this.axios.post('/api/users', this.user)
-          .then((response) => {
-            if (response.data.code === 200) {
-              this.notification = response.data.message;
-              this.$router.push({ name: 'User' });
-            } else { // Errors validate
-              this.errorsValidate = response.data.message;
-            }
-            this.loading.processing = false;
-          })
-          .catch((error) => {
-            this.alert = error
-          });
+        this.modal.addNewUser.isShow = true;
+
+        // tránh việc gọi load liên tục
+          // if (this.loading) return;
+      //   this.loading.processing = true;
+      //   this.axios.post('/api/users', this.user)
+      //     .then((response) => {
+      //       if (response.data.code === 200) {
+      //         this.notification = response.data.message;
+      //         this.$router.push({ name: 'User' });
+      //         this.isShowModalAddNewUser = true;
+      //       } else { // Errors validate
+      //         this.errorsValidate = response.data.message;
+      //       }
+      //       this.loading.processing = false;
+      //     })
+      //     .catch((error) => {
+      //       this.alert = error
+      //     });
       },
     }
   }

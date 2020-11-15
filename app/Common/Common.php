@@ -10,6 +10,20 @@ if (!function_exists('getConfig')) {
     }
 }
 
+if (!function_exists('getBackendConfig')) {
+    function getBackendConfig($key, $default = '')
+    {
+        return config('config.backend.' . $key, $default);
+    }
+}
+
+if (!function_exists('getFrontendConfig')) {
+    function getFrontendConfig($key, $default = '')
+    {
+        return config('config.frontend.' . $key, $default);
+    }
+}
+
 if (!function_exists('getSystemConfig')) {
     function getSystemConfig($key, $default = '')
     {
