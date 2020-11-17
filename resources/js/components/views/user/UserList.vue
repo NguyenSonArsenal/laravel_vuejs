@@ -25,7 +25,7 @@
 
       <div class="ibox-content" >
 
-        <div class="loading1" v-if="loading.processing"><img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/></div>
+        <div class="loading" v-if="loading.processing"><img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/></div>
         <!-- Notification -->
         <Notification
             :propNotification="notification"
@@ -138,9 +138,6 @@
             this.users.pagination = response.data;
             this.users.list = this.users.pagination.data;
             this.users.total = this.users.pagination.total;
-
-            console.log('pagination', this.users.pagination);
-
             this.loading.processing = false;
           })
           .catch((error) => {
@@ -205,53 +202,6 @@
 
 
 <style>
-  .loading {
-    border: 1px solid red;
-    background-color: white;
-    position: fixed;
-    display: block;
-    top: 0;
-    bottom: 0;
-    z-index: 1000000;
-    opacity: 0.75;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-  }
-
-  .loading img {
-    width: 65px;
-    margin: auto;
-    display: block;
-    top: calc(50% - 100px);
-    left: calc(50% - 10px);
-    position: absolute;
-    z-index: 999999;
-  }
-
-  .loading1 {
-    background-color: white;
-    position: absolute;
-    display: block;
-    top: 0;
-    bottom: 0;
-    z-index: 1000000;
-    opacity: 0.75;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-  }
-
-  .loading1 img {
-    width: 65px;
-    margin: auto;
-    display: block;
-    top: calc(50% - 100px);
-    left: calc(50% - 10px);
-    position: absolute;
-    z-index: 999999;
-  }
-
   .ibox-content {
     position: relative;
   }

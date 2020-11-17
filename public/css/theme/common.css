@@ -30,12 +30,11 @@
 }
 
 .loading {
-    border: 1px solid red;
     background-color: white;
-    position: fixed;
+    position: absolute;
     display: block;
     top: 0;
-    bottom: 0;
+    left: 0;
     z-index: 1000000;
     opacity: 0.75;
     width: 100%;

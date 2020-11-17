@@ -31,9 +31,12 @@
               </li>
             </ul>
             <div class="tab-content">
-              <div class="loading1" v-if="loading.processing"><img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/></div>
+
               <div id="tab-1" class="tab-pane active">
                 <div class="panel-body">
+
+                  <div class="loading" v-if="loading.processing"><img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/></div>
+
                   <form action="" method="POST">
 
                     <div class="error alert alert-danger" v-if="errorsValidate.length > 0">
@@ -189,25 +192,22 @@
 
     methods: {
       addUser() {
-        this.modal.addNewUser.isShow = true;
-
         // tránh việc gọi load liên tục
-          // if (this.loading) return;
-      //   this.loading.processing = true;
-      //   this.axios.post('/api/users', this.user)
-      //     .then((response) => {
-      //       if (response.data.code === 200) {
-      //         this.notification = response.data.message;
-      //         this.$router.push({ name: 'User' });
-      //         this.isShowModalAddNewUser = true;
-      //       } else { // Errors validate
-      //         this.errorsValidate = response.data.message;
-      //       }
-      //       this.loading.processing = false;
-      //     })
-      //     .catch((error) => {
-      //       this.alert = error
-      //     });
+        if (this.loading.processing) return;
+        this.loading.processing = true;
+        this.axios.post('/api/users', this.user)
+          .then((response) => {
+            if (response.data.code === 200) {
+              this.notification = response.data.message;
+              this.modal.addNewUser.isShow = true;
+            } else { // Errors validate
+              this.errorsValidate = response.data.message;
+            }
+            this.loading.processing = false;
+          })
+          .catch((error) => {
+            this.alert = error
+          });
       },
     }
   }
