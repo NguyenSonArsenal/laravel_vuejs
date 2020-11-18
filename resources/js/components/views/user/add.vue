@@ -130,6 +130,12 @@
         </div>
       </div>
     </div>
+
+    <!--<Modal-->
+        <!--:propModalIsShow="modal.addNewUser.isShow"-->
+        <!--:propModalBackTo="modal.addNewUser.backTo"-->
+    <!--&gt;</Modal>-->
+
   </div>
 </template>
 
@@ -169,16 +175,30 @@
       }
     },
 
+    computed: {
+      getIsShowModalAddNewUser() {
+        return this.modal.addNewUser.isShow;
+      }
+    },
+
+    watch: {
+      getIsShowModalAddNewUser: function () {
+        if (this.modal.addNewUser.isShow) {
+          $("#modalInformation").modal('show');
+        } else {
+          $("#modalInformation").modal('hide');
+        }
+      }
+    },
+
     methods: {
       addUser() {
         // tránh việc gọi load liên tục
         if (this.loading.processing) return;
-
         this.loading.processing = true;
         this.axios.post('/api/users', this.user)
           .then((response) => {
             if (response.data.code === 200) {
-              this.notification = response.data.message;
               this.modal.addNewUser.isShow = true;
             } else { // Errors validate
               this.errorsValidate = response.data.message;

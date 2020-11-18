@@ -67,7 +67,7 @@
                             label="name"
                             class="v-select"
                             placeholder="Chọn giới tính"
-                            :options="user.listGender"
+                            :options="listGender"
                             v-model="user.userGender"
                             :close-on-select="true"
                             :clear-on-select="false"
@@ -87,7 +87,7 @@
                     <br>
                     <div class="form-group row">
                       <div class="col-12">
-                        <button class="btn btn-primary btn-sm" type="button" @click="addUser()"><i class="fa fa-save"> Lưu</i></button>
+                        <button class="btn btn-primary btn-sm" type="button" @click="updateUser()"><i class="fa fa-save"> Lưu</i></button>
 
                         <!-- @todo  add back url -->
                         <router-link :to="{name: 'User'}">
@@ -110,21 +110,21 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="modal.addNewUser.isShow = !modal.addNewUser.isShow">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="modal.info.isShow = !modal.info.isShow">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            Thêm mới thành công
+            Cập nhật thành công
           </div>
           <div class="modal-footer">
             <router-link :to="{name: 'User'}">
-              <button class="btn btn-secondary btn-sm" type="button" @click="modal.addNewUser.isShow = !modal.addNewUser.isShow">
+              <button class="btn btn-secondary btn-sm" type="button" @click="modal.info.isShow = !modal.info.isShow">
                 <i class="fa fa-arrow-circle-left"></i> Quay lại
               </button>
             </router-link>
             <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" aria-label="Close"
-                    @click="modal.addNewUser.isShow = !modal.addNewUser.isShow"><i class="fa fa-repeat"></i> OK
+                    @click="modal.info.isShow = !modal.info.isShow"><i class="fa fa-repeat"></i> OK
             </button>
           </div>
         </div>
@@ -149,19 +149,19 @@
     data() {
       return {
         errorsValidate: [],
+        listGender: [{id: 1, name: "Nam"}, {id: 2, name: "Nữ"}],
         user: {
           userName: '',
           userAddress: '',
           userEmail: '',
           userPhone: '',
-          listGender: [{id: 1, name: "Nam"}, {id: 2, name: "Nữ"}],
           userGender: {id: 1, name: "Nam"},
         },
         loading: {
           processing: false,
         },
         modal: {
-          addNewUser: {
+          info: {
             isShow: false,
             backTo: 'User'
           }
@@ -169,18 +169,47 @@
       }
     },
 
+    created() {
+      this.getUser();
+
+    },
+
+    watch: {
+      "modal.info.isShow"(newValue, oldValue) {
+        this.modal.info.isShow = newValue;
+        if (this.modal.info.isShow) {
+          $("#modalInformation").modal('show')
+        } else {
+          $("#modalInformation").modal('hide')
+        }
+      }
+    },
+
     methods: {
-      addUser() {
-        // tránh việc gọi load liên tục
-        if (this.loading.processing) return;
+      getUser() {
+        let id = this.$route.params.id;
+        this.axios.get('/api/users/' + id + '/edit')
+          .then((response) => {
+            this.user = response.data
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      },
+
+      updateUser() {
+        if (this.loading.processing) return; // tránh việc gọi load liên tục
 
         this.loading.processing = true;
-        this.axios.post('/api/users', this.user)
+        let id = this.$route.params.id;
+
+        this.axios.put('/api/users/' + id, this.user)
           .then((response) => {
-            if (response.data.code === 200) {
-              this.notification = response.data.message;
-              this.modal.addNewUser.isShow = true;
-            } else { // Errors validate
+            if (response.data.code == 200) {
+              this.loading.processing = false;
+              this.errorsValidate = []
+              this.modal.info.isShow = true;
+            } else {
               this.errorsValidate = response.data.message;
             }
             this.loading.processing = false;

@@ -3,14 +3,12 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
-import LoadingComponent from './components/core/Loading'
 import VModal from 'vue-js-modal'
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 Vue.use(VModal, { componentName: 'VModal' })
 Vue.component('MyPagination', require('laravel-vue-pagination'));
-Vue.component('LoadingComponent', LoadingComponent);
 // ========== End Global Component ==========
 
 import App from './components/views/App.vue';
