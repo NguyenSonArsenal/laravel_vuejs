@@ -1,5 +1,8 @@
 <?php
 
+define("GENDER_BOY", 1);
+define("GENDER_GIRL", 2);
+
 return [
     'backend' => [
         'pagination' => [
@@ -8,8 +11,8 @@ return [
     ],
     'database' => [
         'gender' => [
-            'boy' => ['id' => 1, 'alias' => 'Nam'],
-            'girl' => ['id' => 2, 'alias' => 'Nữ']
+            GENDER_BOY => ['id' => GENDER_BOY, 'name' => 'Nam'],
+            GENDER_GIRL => ['id' => GENDER_GIRL, 'name' => 'Nữ']
         ]
     ],
     'del_flag' => [

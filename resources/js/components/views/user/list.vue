@@ -54,10 +54,11 @@
               <td>{{ user.userGender | showGender }}</td>
               <td>{{ user.userAddress }}</td>
               <td>
-                <a href=""
-                   class="btn-primary btn btn-xs rounded">
-                  <i class="fa fa-edit">Sửa</i>
-                </a>
+                <router-link
+                    class="btn-primary btn btn-xs rounded"
+                    title="Nhấp vào để cập nhật thông tin user"
+                    :to="`/users/${user.id}/edit`"
+                ><i class="fa fa-edit">Sửa</i></router-link>
 
                 <a href="#model_confirm_delete" @click="deleteAUser(user.id, index)"
                    class="btn-danger btn btn-xs model_confirm_delete rounded"

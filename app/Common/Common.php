@@ -70,3 +70,14 @@ if (!function_exists('transMessage')) {
         return empty(trans('messages.' . $key)) ? $default : trans('messages.' . $key);
     }
 }
+
+if (!function_exists('arrayGet')) {
+    function arrayGet($arr = [], $key, $default = '')
+    {
+        if (!is_array($arr) || empty($arr[$key])) {
+            return '';
+        }
+
+        return $arr[$key];
+    }
+}

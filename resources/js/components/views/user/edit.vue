@@ -3,13 +3,13 @@
   <div>
     <div class="row wrapper border-bottom white-bg page-heading">
       <div class="col-lg-10">
-        <h2>Học sinh: Thêm mới</h2>
+        <h2>Users: Cập nhật thông tin</h2>
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <router-link :to="{name:'Dashboard'}">Trang chủ</router-link>
           </li>
           <li class="breadcrumb-item active">
-            <router-link :to="{name:'User'}"><strong> Học sinh </strong></router-link>
+            <router-link :to="{name:'User'}"><strong> Users </strong></router-link>
           </li>
         </ol>
       </div>
@@ -27,7 +27,7 @@
           <div class="tabs-container">
             <ul class="nav nav-tabs">
               <li>
-                <a class="nav-link active" data-toggle="tab" href="#tab-1"> Thông tin học sinh</a>
+                <a class="nav-link active" data-toggle="tab" href="#tab-1"> Thông tin user</a>
               </li>
             </ul>
             <div class="tab-content">
@@ -104,7 +104,8 @@
       </div>
     </div>
 
-    <div class="modal fade show" id="modalInformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade show" id="modalInformation" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -129,12 +130,6 @@
         </div>
       </div>
     </div>
-
-    <!--<Modal-->
-        <!--:propModalIsShow="modal.addNewUser.isShow"-->
-        <!--:propModalBackTo="modal.addNewUser.backTo"-->
-    <!--&gt;</Modal>-->
-
   </div>
 </template>
 
@@ -174,26 +169,11 @@
       }
     },
 
-    computed: {
-      getIsShowModalAddNewUser() {
-        return this.modal.addNewUser.isShow;
-      }
-    },
-
-    watch: {
-      getIsShowModalAddNewUser: function () {
-        if (this.modal.addNewUser.isShow) {
-          $("#modalInformation").modal('show');
-        } else {
-          $("#modalInformation").modal('hide');
-        }
-      }
-    },
-
     methods: {
       addUser() {
         // tránh việc gọi load liên tục
         if (this.loading.processing) return;
+
         this.loading.processing = true;
         this.axios.post('/api/users', this.user)
           .then((response) => {
@@ -214,16 +194,4 @@
 </script>
 
 <style>
-  .vs__dropdown-toggle {
-    width: 100%;
-    height: 36px;
-    border-radius: 0;
-    border: 1px solid #e5e6e7;
-  }
-
-  .vs__dropdown-toggle:focus{
-    border-color: #1ab394;
-  }
-
-  /*, input .vs__search:active*/
 </style>

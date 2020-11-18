@@ -65,4 +65,50 @@ class UserController extends ApiBaseController
 
         return $this->renderErrorJson();
     }
+
+    public function edit($id)
+    {
+        $entity = $this->getRepository()->findById($id);
+        if (empty($entity)) {
+            // @todo return redirect to 404 page
+        }
+        $listGender = getConfig('database.gender');
+        $entity->userGender = arrayGet($listGender, $entity->userGender);
+        return response($entity);
+    }
+
+    public function update($id)
+    {
+        $params = request()->all();
+        $params['userGender'] = $params['userGender']['id'];
+
+        /** @var UserValidator $validator */
+        $validator = $this->getRepository()->getValidator();
+
+        if (!$validator->backendValidateUpdateUser($params)) {
+            $this->ajaxSetErrorValidate($validator->errors());
+            return $this->renderErrorJson();
+        }
+
+        try {
+            $entity = $this->getRepository()->findById($id);
+
+            if (empty($entity)) {
+                $this->ajaxSetMessage(transMessage('system_error'));
+                return $this->renderErrorJson();
+            }
+
+            $entity->fill($params);
+            $entity->save();
+
+            $this->ajaxSetMessage(transMessage('update_success'));
+            return $this->renderJson();
+        } catch (\Exception $e) {
+            $this->ajaxSetMessage(transMessage('system_error'));
+        }
+
+
+        return $this->renderErrorJson();
+
+    }
 }

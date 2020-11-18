@@ -22,6 +22,22 @@ class User extends BaseValidator
 
         return $this->validate($rules, $params);
     }
+
+    /**
+     * @param array $params
+     * @return bool
+     * Backend validate store product
+     */
+    public function backendValidateUpdateUser($params = [])
+    {
+        $rules = [
+            'userName' => 'required|max:64',
+            'userPhone' => ['bail', 'required', 'regex:/^(84|0[1|8|9])([0-9]{8,9})$/', 'unique:users,userPhone,' . arrayGet($params, 'id')],
+            'userEmail' => 'bail|required|email|max:64|unique:users,userEmail, '  . arrayGet($params, 'id'),
+        ];
+
+        return $this->validate($rules, $params);
+    }
     // ========== END BACKEND AREA ==========
 
     protected function _setCustomAttributes()
