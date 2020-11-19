@@ -112,7 +112,6 @@
         myPagination: {
           perPage: 5
         },
-        router_url: "api/users",
         loading: {
           spin: 'mini',
           text: 'Đang xử lý ...',
@@ -134,7 +133,7 @@
           perPage: this.myPagination.perPage,
         };
 
-        this.axios.get('api/users?page=' + page + '&pagination=' + JSON.stringify(pagination))
+        this.axios.get('/api/users?page=' + page + '&pagination=' + JSON.stringify(pagination))
           .then((response) => {
             this.users.pagination = response.data;
             this.users.list = this.users.pagination.data;
@@ -150,7 +149,7 @@
       deleteAUser(id) {
         if (confirm('Are you sure?')) {
           this.loading.processing = true;
-          this.axios.delete('api/users/' + id)
+          this.axios.delete('/api/users/' + id)
             .then((response) => {
               if (response.status === 200) {
                 this.notification = response.data.message;
@@ -172,6 +171,7 @@
         this.getUser2();
       },
 
+      // get users by click pagination
       getUser2() {
         this.loading.processing = true;
 
@@ -179,7 +179,7 @@
           perPage: this.myPagination.perPage,
         };
 
-        this.axios.get('api/users?pagination=' + JSON.stringify(pagination))
+        this.axios.get('/api/users?pagination=' + JSON.stringify(pagination))
           .then((response) => {
             this.users = response.data;
             this.loading.processing = false;

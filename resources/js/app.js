@@ -11,7 +11,7 @@ Vue.use(VModal, { componentName: 'VModal' })
 Vue.component('MyPagination', require('laravel-vue-pagination'));
 // ========== End Global Component ==========
 
-import App from './components/views/App.vue';
+import App from './views/App.vue';
 import router from './routes.js'
 
 // Create and mount to root

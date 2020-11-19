@@ -48,6 +48,9 @@
 @stack('plugin_js')
 
 <script src="{{ asset('js/theme/common.js') }}"></script>
+
+<!-- For vuejs -->
+{{--<script src="{{ asset('js/login.js') }}"></script>--}}
 <script src="{{ asset('js/app.js') }}"></script>
 
 @stack('scripts')

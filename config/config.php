@@ -1,7 +1,7 @@
 <?php
 
-define("GENDER_BOY", 1);
-define("GENDER_GIRL", 2);
+if (!defined('GENDER_BOY')) define('GENDER_BOY', 1);
+if (!defined('GENDER_GIRL')) define('GENDER_GIRL', 2);
 
 return [
     'backend' => [

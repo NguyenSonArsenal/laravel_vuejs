@@ -3,21 +3,18 @@
 <template>
     <div id="wrapper">
         <Navbar />
-
         <div id="page-wrapper" class="gray-bg">
             <HeaderTop />
-            <router-view></router-view> <!-- Content -->
+            <router-view></router-view>
             <Footer />
         </div>
-
-        <!--<Modal />--> <!-- @todo -->
     </div>
 </template>
 
 <script>
-    import Navbar from '../layouts/Navbar.vue';
-    import HeaderTop from '../layouts/HeaderTop.vue';
-    import Footer from '../layouts/Footer.vue';
+    import Navbar from './backend/layouts/Navbar.vue';
+    import HeaderTop from './backend/layouts/HeaderTop.vue';
+    import Footer from './backend/layouts/Footer.vue';
 
     export default {
         // name: 'app',
