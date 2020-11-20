@@ -64,14 +64,14 @@
                       <div class="col-3">
                         <label class="col-form-label">Giới tính: </label>
                         <VueSelect
-                            label="name"
-                            class="v-select"
-                            placeholder="Chọn giới tính"
-                            :options="user.listGender"
-                            v-model="user.userGender"
-                            :close-on-select="true"
-                            :clear-on-select="false"
-                            :searchable="true"
+                          label="name"
+                          class="v-select"
+                          placeholder="Chọn giới tính"
+                          :options="user.listGender"
+                          v-model="user.userGender"
+                          :close-on-select="true"
+                          :clear-on-select="false"
+                          :searchable="true"
                         ></VueSelect>
                       </div>
                     </div>
@@ -134,13 +134,14 @@
     <Modal
         :propModalIsShow="modal.addNewUser.isShow"
         :propModalBackTo="modal.addNewUser.backTo"
+        v-on:emitHideModal="closeModal"
     ></Modal>
 
   </div>
 </template>
 
 <script>
-  import "vue-select/dist/vue-select.css";
+  import "vue-select/dist/vue-select.css"; // required for VueSelect
   import VueSelect from 'vue-select';
   import Modal from "../../includes/Modal";
 
@@ -209,6 +210,10 @@
             this.alert = error
           });
       },
+
+      closeModal() {
+        this.modal.addNewUser.isShow = false;
+      }
     }
   }
 </script>

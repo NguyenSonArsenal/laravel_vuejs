@@ -13,16 +13,16 @@
             </button>
           </div>
           <div class="modal-body">
-            Thêm mới thành công test Ok
+            Thêm mới thành công
           </div>
           <div class="modal-footer">
             <router-link :to="{name: backTo}">
-              <button class="btn btn-secondary btn-sm" type="button" @click="show = !show">
+              <button class="btn btn-secondary btn-sm" type="button" @click="backToList()">
                 <i class="fa fa-arrow-circle-left"></i> Quay lại
               </button>
             </router-link>
             <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" aria-label="Close"
-                    @click="show = !show"><i class="fa fa-repeat"></i> OK
+                    @click="backToList()"><i class="fa fa-repeat"></i> OK
             </button>
           </div>
         </div>
@@ -45,7 +45,7 @@
           return this.propModalIsShow
         },
         set: function (newValue) {
-          return this.show = newValue
+          this.show = newValue
         }
       },
       backTo: function () {
@@ -63,6 +63,12 @@
 
       }
     },
+
+    methods: {
+      backToList() {
+        this.$emit('emitHideModal', false);
+      }
+    }
   }
 </script>
 
