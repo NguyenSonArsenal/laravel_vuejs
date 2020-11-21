@@ -154,13 +154,14 @@
               if (response.status === 200) {
                 this.notification = response.data.message;
                 this.getUsers();
+                this.loading.processing = false;
               }
-              this.loading.processing = false;
             })
             .catch((error) => {
               console.log('Error delete a user function: something in wrong');
               console.log(error);
             });
+            this.loading.processing = false;
         }
       },
 

@@ -1,13 +1,16 @@
 <style></style>
 
 <template>
-    <div id="wrapper">
+    <div id="wrapper" v-if="!isBackEndLoginPage">
         <Navbar />
         <div id="page-wrapper" class="gray-bg">
             <HeaderTop />
             <router-view></router-view>
             <Footer />
         </div>
+    </div>
+    <div v-else>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -23,17 +26,27 @@
             'Footer': Footer,
             'Navbar': Navbar
         },
+
         data() {
-            return {};
+            return {
+                routeName: null,
+                isBackEndLoginPage: false
+            };
         },
-        methods : {
 
+        watch: {
+            '$route': 'currentRoute',
+            routeName() {
+                this.isBackEndLoginPage = this.routeName.toLowerCase() == 'login'
+            }
         },
-        computed : {
 
+        methods: {
+            currentRoute() {
+                this.$nextTick(() => {
+                    this.routeName = this.$route.name
+                });
+            }
         },
-        ready : function(){
-
-        }
     }
 </script>

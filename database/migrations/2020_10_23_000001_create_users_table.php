@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('userName', 64)->comment('Họ tên');
             $table->string('userEmail', 255);
+            $table->string('userPassword', 255);
             $table->string('userPhone', 255);
             $table->char('userGender', 1)->default(getConfig('user.userGender.girl'))->comment('1 boy, 2 girl');
             $table->date('userBirthDay')->nullable()->comment('Ngày sinh');

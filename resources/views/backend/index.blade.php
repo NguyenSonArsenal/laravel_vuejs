@@ -29,9 +29,7 @@
 
 <body>
 
-<div id="wrapper">
-    <section id="app">
-    </section>
+<div id="app">
 </div>
 
 {{--@include('layouts.backend.elements._modal')--}}
