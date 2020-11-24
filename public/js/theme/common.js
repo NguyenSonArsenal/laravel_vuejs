@@ -50,3 +50,7 @@ function showLoading() {
 function hideLoading() {
     $.LoadingOverlay("hide");
 }
+
+function ajaxOk(response) {
+    return response.data.code == 200
+}

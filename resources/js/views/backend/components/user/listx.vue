@@ -113,10 +113,7 @@
           perPage: 5
         },
         loading: {
-          spin: 'mini',
-          text: 'Đang xử lý ...',
-          processing: false,
-          duration: 300
+          processing: false
         },
       }
     },

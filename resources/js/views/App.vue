@@ -9,7 +9,7 @@
             <Footer />
         </div>
     </div>
-    <div v-else>
+    <div v-else style="height: 100%; background: #f3f3f4">
         <router-view></router-view>
     </div>
 </template>
