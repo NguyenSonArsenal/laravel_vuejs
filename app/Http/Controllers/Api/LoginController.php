@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Entities\Districts;
+use App\Models\Entities\Provinces;
 use App\Models\Entities\User;
 use App\Repositories\UserRepository;
 
@@ -20,23 +22,38 @@ class LoginController extends ApiBaseController
             ->first();
 
         // @todo check password
-
-        // if login success
-        if (false) {
+        // if (!empty($user) && Hash::check(request('userPassword'), $user->userPassword)) {
+        if (true) {
+            $data = $this->_getDataAfterLogin();
+//            adminGuard()->login($user);
+            $this->ajaxSetData($data);
             $this->ajaxSetMessage(transMessage('success'));
             return $this->renderJson();
         }
 
         $this->ajaxSetErrorValidate(transMessage('login_error'));
         return $this->renderErrorJson();
+    }
 
-        // else login error
+    protected function _getDataAfterLogin()
+    {
+        $provinces = Provinces::select('id', 'name')->get()->toArray();
+        $districts = Districts::select('id', 'name', 'province_id')->get()->toArray();
+        $genders = getConfig('database.gender');
 
-//        if (!empty($user) && Hash::check(request('userPassword'), $user->userPassword)) {
-//            adminGuard()->login($user);
-//            return redirect()->route(backendBuildRouteName('dashboard'));
-//        }
+        $data = [
+            'gender' => $genders,
+            'provinces' => $provinces,
+            'districts' => $districts,
+        ];
 
-//        return $this->_backWithError(['errors' => transMessage('login_error')]);
+        return $data;
+    }
+
+    public function logout()
+    {
+        $a = 1;
+//        adminGuard()->logout();
+        return $this->renderJson();
     }
 }

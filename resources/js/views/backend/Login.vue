@@ -47,7 +47,8 @@
         showLoading();
         this.axios.post('/api/login', this.user)
           .then((response) => {
-            if (ajaxOk(response)) { // @todo write response success function
+            if (ajaxOk(response)) {
+              setLocalStorage('__CONFIG__', JSON.stringify(response.data.data));
               hideLoading();
               return this.$router.push({name: 'Dashboard'});
             }

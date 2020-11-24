@@ -54,3 +54,18 @@ function hideLoading() {
 function ajaxOk(response) {
     return response.data.code == 200
 }
+
+
+// ========== LOCAL STORAGE ==========
+function setLocalStorage(key, value = '') {
+    localStorage.setItem(key, value);
+}
+
+function getLocalStorage(key) {
+    return localStorage.getItem(key);
+}
+
+function removeLocalStorage(key) {
+    localStorage.removeItem(key);
+}
+// ========== LOCAL STORAGE ==========

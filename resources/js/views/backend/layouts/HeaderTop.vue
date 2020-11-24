@@ -109,14 +109,9 @@
                     </li>
 
                     <li>
-                        <!--<a href="">-->
-                            <!--<i class="fa fa-sign-out"></i> Đăng xuất-->
-                        <!--</a>-->
-
-                        <router-link
-                            title="Nhấp vào để đăng xuất khỏi hệ thống"
-                            :to="{name:'Login'}"
-                        ><i class="fa fa-sign-out"></i>Đăng xuất</router-link>
+                        <a href="javascript:void(0);" @click="logout">
+                            <i class="fa fa-sign-out"></i> Đăng xuất
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -126,7 +121,23 @@
 
 <script>
     export default {
-        name: 'comp-header',
+        methods: {
+            logout() {
+                // @todo add confirm logout
+               showLoading();
+                this.axios.get('/api/logout', this.user)
+                    .then((response) => {
+                        if (ajaxOk(response)) {
+                            removeLocalStorage('__CONFIG__');
+                            hideLoading();
+                            return this.$router.push({name: 'Login'});
+                        }
+                    })
+                    .catch((error) => {
+                        console.log('Error');
+                    });
+            },
+        }
     }
 </script>
 
