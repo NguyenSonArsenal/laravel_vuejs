@@ -1,16 +1,20 @@
 <style></style>
 
 <template>
-    <div id="wrapper" v-if="!isBackEndLoginPage">
+
+    <router-view v-if="isFrontendArea"></router-view>  <!-- FRONTEND AREA -->
+
+    <div v-else-if="isBackEndLoginPage" style="height: 100%; background: #f3f3f4">
+        <router-view></router-view> <!-- BACKEND LOGIN -->
+    </div>
+
+    <div id="wrapper" v-else="isBackendArea">  <!-- BACKEND AREA -->
         <Navbar />
         <div id="page-wrapper" class="gray-bg">
             <HeaderTop />
             <router-view></router-view>
             <Footer />
         </div>
-    </div>
-    <div v-else style="height: 100%; background: #f3f3f4">
-        <router-view></router-view>
     </div>
 </template>
 
@@ -30,7 +34,9 @@
         data() {
             return {
                 routeName: null,
-                isBackEndLoginPage: false
+                isBackEndLoginPage: false,
+                isFrontendArea: false,
+                isBackendArea: false,
             };
         },
 
@@ -38,6 +44,12 @@
             '$route': 'currentRoute',
             routeName() {
                 this.isBackEndLoginPage = this.routeName.toLowerCase() == 'login'
+
+                if (!this.$router.currentRoute.path.includes("management")) {
+                    this.isFrontendArea = true
+                } else {
+                    this.isBackendArea = true;
+                }
             }
         },
 

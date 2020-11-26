@@ -2,6 +2,8 @@
 
 if (!defined('GENDER_BOY')) define('GENDER_BOY', 1);
 if (!defined('GENDER_GIRL')) define('GENDER_GIRL', 2);
+if (!defined('STATUS_ACTIVE')) define('STATUS_ACTIVE', 1);
+if (!defined('STATUS_DISABLE')) define('STATUS_DISABLE', 2);
 
 return [
     'backend' => [
@@ -21,8 +23,8 @@ return [
     ],
     'common' => [
         'status' => [
-            'active' => ['id' => 1, 'alias' => 'Hoạt động'],
-            'disabled' => ['id' => 2, 'alias' => 'Vô hiệu hóa'],
+            'active' => ['id' => STATUS_ACTIVE, 'alias' => 'Hoạt động'],
+            'disabled' => ['id' => STATUS_DISABLE, 'alias' => 'Vô hiệu hóa'],
 //            'waiting_active' => ['id' => 3, 'alias' => 'Chờ kích hoạt']
         ]
     ],

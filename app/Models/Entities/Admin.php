@@ -3,24 +3,16 @@
 namespace App\Models\Entities;
 
 use App\Models\Entities\Base\BaseModel;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\Notifiable;
 
-class User extends BaseModel
+class Admin extends BaseModel
 {
-    use HasFactory, Notifiable;
-
-    protected $table = 'users';
-
+    protected $table = 'admins';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'userName', 'userEmail', 'userPhone', 'userPassword', 'userGender', 'userBirthDay', 'userAvatar', 'userProvinceId',
-        'userDistrictId', 'userAddress', 'userStatus', 'del_flag'
-    ];
+    protected $fillable = [];
 
     /**
      * The attributes that should be hidden for arrays.

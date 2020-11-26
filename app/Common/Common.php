@@ -3,6 +3,8 @@
 // Functions common for ALL project
 
 
+use Illuminate\Support\Facades\Auth;
+
 if (!function_exists('getConfig')) {
     function getConfig($key, $default = '')
     {
@@ -79,5 +81,19 @@ if (!function_exists('arrayGet')) {
         }
 
         return $arr[$key];
+    }
+}
+
+if (!function_exists('adminGuard')) {
+    function adminGuard()
+    {
+        return Auth::guard('admins');
+    }
+}
+
+if (!function_exists('isBackendArea')) {
+    function isBackendArea()
+    {
+        return request()->is(getConstant('BACKEND_ALIAS'), getConstant('BACKEND_ALIAS') . '/*');
     }
 }

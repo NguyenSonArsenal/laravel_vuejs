@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Entities\Admin;
 use App\Models\Entities\Districts;
 use App\Models\Entities\Provinces;
 use App\Models\Entities\User;
@@ -16,8 +17,8 @@ class LoginController extends ApiBaseController
 
     public function postLogin()
     {
-        $user = User::where('userEmail', request('userEmail'))
-            ->where('userStatus', getConfig('user.userStatus.active'))
+        $admin = Admin::where('adminEmail', 'admin@gmail.com')
+            ->where('adminStatus', getConfig('common.status.active.id'))
             ->where('del_flag', '=', getConfig('del_flag.on'))
             ->first();
 
@@ -25,7 +26,7 @@ class LoginController extends ApiBaseController
         // if (!empty($user) && Hash::check(request('userPassword'), $user->userPassword)) {
         if (true) {
             $data = $this->_getDataAfterLogin();
-//            adminGuard()->login($user);
+            adminGuard()->login($admin);
             $this->ajaxSetData($data);
             $this->ajaxSetMessage(transMessage('success'));
             return $this->renderJson();
@@ -52,8 +53,7 @@ class LoginController extends ApiBaseController
 
     public function logout()
     {
-        $a = 1;
-//        adminGuard()->logout();
+        adminGuard()->logout();
         return $this->renderJson();
     }
 }
