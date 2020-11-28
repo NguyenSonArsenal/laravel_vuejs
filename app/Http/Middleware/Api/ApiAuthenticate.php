@@ -2,33 +2,55 @@
 
 namespace App\Http\Middleware\Api;
 
+use App\Repositories\AdminRepository;
 use Closure;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Request;
 
 class ApiAuthenticate
 {
-    public function handle($request, Closure $next)
+    protected $_repository = null;
+
+    /**
+     * @return null
+     */
+    public function getRepository()
     {
-        $a = 1;
-        return $next($request);
-
-        // Ignore request to login page
-        if ($request->is('*login')) {
-            return $next($request);
-        }
-
-        // If the user is not logged in, go to the login page
-        if ($this->_check()) {
-            // return redirect()->route(backendBuildRouteName('get.login'));
-        }
-
-        return $next($request);
+        return $this->_repository;
     }
 
-    protected function _check()
+    /**
+     * @param null $repository
+     */
+    public function setRepository($repository)
     {
-        //not logged in or deleted or status disable
-        return !getCurrentAdminEntity() ||
-            getCurrentAdminEntity()->{getSystemConfig('deleted_at_column')} ||
-            getCurrentAdminEntity()->isAdminStatusDisabled();
+        $this->_repository = $repository;
+    }
+
+    public function __construct(AdminRepository $adminRepository)
+    {
+        $this->setRepository($adminRepository);
+    }
+
+    public function handle($request, Closure $next, $guard = null)
+    {
+        if ($this->auth($request)) {
+            return $next($request);
+        }
+        throw new AuthenticationException(trans('messages.permission_denied'));
+    }
+
+    public function auth(Request $request)
+    {
+        $accessToken = $request->get('accessToken');
+        if (!$accessToken) {
+            return false;
+        }
+        $user = $this->getRepository()->where('accessToken', $accessToken)->first();
+        if(empty($user)){
+            return false;
+        }
+        apiGuard()->setUser($user);
+        return true;
     }
 }

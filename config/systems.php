@@ -16,4 +16,10 @@ return [
     'status_code_404' => 404,
 
     'sql_log' => env('HAS_LOG_SQL', true),
+
+    //auth
+    'backend_guard' => 'admins',
+    'frontend_guard' => 'frontend',
+    'api_guard' => 'api',
+    'guest_guard' => 'guest',
 ];

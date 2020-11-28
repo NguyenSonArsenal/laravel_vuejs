@@ -2,17 +2,20 @@
 
 namespace App\Models\Entities;
 
+use App\Models\Base\ApiToken;
 use App\Models\Entities\Base\BaseModel;
 
 class Admin extends BaseModel
 {
+    use ApiToken;
+
     protected $table = 'admins';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['adminUserName', 'adminEmail', 'adminPassword', 'adminAvatar', 'adminRoleType', 'accessToken'];
 
     /**
      * The attributes that should be hidden for arrays.

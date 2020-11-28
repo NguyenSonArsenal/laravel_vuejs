@@ -6,6 +6,17 @@ trait RepositoryUtil
 {
 	/**  */
 	protected $_repos = [];
+    protected $_repository = null;
+
+    public function setRepository($repository)
+    {
+        $this->_repository = $repository;
+    }
+
+    public function getRepository()
+    {
+        return $this->_repository;
+    }
 
 	public function registerRepository(...$repo)
 	{
@@ -15,10 +26,6 @@ trait RepositoryUtil
 		return $this;
 	}
 
-	/** 
-	 * @param string $key
-	 * @return CustomRepository
-	 */
 	public function fetchRepository($key)
 	{
         if ($key) {
@@ -27,10 +34,6 @@ trait RepositoryUtil
 		return null;
 	}
 
-	/** 
-	 * @param string $className
-	 * @return CustomRepository
-	 */
 	public function fetchModel($className)
 	{
 		return $this->fetchRepository($className)->getModel();

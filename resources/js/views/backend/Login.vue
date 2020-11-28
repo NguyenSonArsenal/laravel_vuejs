@@ -8,10 +8,10 @@
 
       <form class="m-t" role="form" action="">
         <div class="form-group">
-          <input type="email" class="form-control" placeholder="Enter your email" v-model="user.userEmail" required="">
+          <input type="email" class="form-control" placeholder="Enter your email" v-model="admin.adminEmail" required="">
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" placeholder="**********" v-model="user.userPassword" required="">
+          <input type="password" class="form-control" placeholder="**********" v-model="admin.adminPassword" required="">
         </div>
         <button type="button" class="btn btn-primary block full-width m-b" @click="login">Login</button>
       </form>
@@ -32,9 +32,9 @@
     data() {
       return {
         errorsValidate: [],
-        user: {
-          userEmail: '',
-          userPassword: '',
+        admin: {
+          adminEmail: '',
+          adminPassword: '',
         },
         loading: {
           processing: false
@@ -45,7 +45,7 @@
     methods: {
       login() {
         showLoading();
-        this.axios.post('/api/login', this.user)
+        this.axios.post('/api/login', this.admin)
           .then((response) => {
             if (ajaxOk(response)) {
               setLocalStorage('__CONFIG__', JSON.stringify(response.data.data));

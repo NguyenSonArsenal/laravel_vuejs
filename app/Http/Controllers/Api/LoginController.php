@@ -5,31 +5,41 @@ namespace App\Http\Controllers\Api;
 use App\Models\Entities\Admin;
 use App\Models\Entities\Districts;
 use App\Models\Entities\Provinces;
-use App\Models\Entities\User;
-use App\Repositories\UserRepository;
+use App\Repositories\AdminRepository;
+use Illuminate\Support\Facades\Hash;
+use App\Validators\Admin as AdminValidator;
 
 class LoginController extends ApiBaseController
 {
-    public function __construct(UserRepository $userRepository)
+    public function __construct(AdminRepository $userRepository)
     {
         $this->setRepository($userRepository);
     }
 
     public function postLogin()
     {
-        $admin = Admin::where('adminEmail', 'admin@gmail.com')
+        $params = request()->all();
+
+        $validator = $this->getRepository()->getValidator();
+        /** @var AdminValidator $validator */
+        if (!$validator->apiValidatePostLogin($params)) {
+            return $this->renderErrorJson($params, $validator->errors());
+        }
+
+        $adminEmail = arrayGet($params, 'adminEmail');
+        $adminPassword = arrayGet($params, 'adminPassword');
+
+        $admin = Admin::where('adminEmail', $adminEmail)
             ->where('adminStatus', getConfig('common.status.active.id'))
             ->where('del_flag', '=', getConfig('del_flag.on'))
             ->first();
 
-        // @todo check password
-        // if (!empty($user) && Hash::check(request('userPassword'), $user->userPassword)) {
-        if (true) {
+        if (!empty($admin) && Hash::check($adminPassword, $admin->adminPassword)) {
+            $admin->renewAccessToken();
             $data = $this->_getDataAfterLogin();
-            adminGuard()->login($admin);
-            $this->ajaxSetData($data);
-            $this->ajaxSetMessage(transMessage('success'));
-            return $this->renderJson();
+            $data = array('token' => $admin->{$admin->accessTokenFieldName()}) + $data;
+            apiGuard()->login($admin);
+            return $this->renderJson($data, transMessage('success'));
         }
 
         $this->ajaxSetErrorValidate(transMessage('login_error'));
@@ -53,7 +63,8 @@ class LoginController extends ApiBaseController
 
     public function logout()
     {
-        adminGuard()->logout();
+        apiGetCurrentUser()->resetAccessToken();
+        apiGuard()->logout(); // log the user out of our application
         return $this->renderJson();
     }
 }
