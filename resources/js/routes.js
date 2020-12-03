@@ -7,7 +7,7 @@ import VueRouter from "vue-router";
 // // ========== BACKEND AREA ==========
 const Login = () => import('./views/backend/Login');
 const Dashboard = () => import(__BE_DIR__ + 'Dashboard');
-const User = () => import(__BE_DIR__ + 'user/listx');
+const User = () => import(__BE_DIR__ + 'user/list');
 const UserAdd = () => import(__BE_DIR__ + 'user/add');
 const UserEdit = () => import(__BE_DIR__ + 'user/edit');
 const ChildParentComponent = () => import(__BE_DIR__ + 'child_parent_component/Index');

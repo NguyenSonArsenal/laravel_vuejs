@@ -2,13 +2,13 @@
   <div>
     <div class="row wrapper border-bottom white-bg page-heading page_products">
       <div class="col-lg-10">
-        <h2>Danh sách học sinh</h2>
+        <h2>Danh sách người dùng</h2>
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="">Trang chủ</a>
           </li>
           <li class="breadcrumb-item active">
-            <strong>Danh sách học sinh</strong>
+            <strong>Danh sách người dùng</strong>
           </li>
         </ol>
       </div>
@@ -25,7 +25,8 @@
 
       <div class="ibox-content" >
 
-        <div class="loading" v-if="loading.processing"><img src="/backend/images/theme/ajax-loading-icon-11.jpg" alt="Loading..."/></div>
+        <MyLoading :active="loading.processing"></MyLoading>
+
         <!-- Notification -->
         <Notification
             :propNotification="notification"
@@ -225,7 +226,6 @@
     text-align: right;
     float: right;
     display: inline-flex;
-    margin-bottom: 0;
     vertical-align: middle;
     margin: 0 auto;
   }
